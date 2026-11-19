@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>A visita · Trabalho forçado na cadeia de fornecedores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --roxo:#210456;--roxo3:#5B3E99;--lilas:#F3EFF9;--lilas2:#E4DCF2;
+  --verde:#5C922D;--verde2:#477223;--verde3:#8DBF5A;--verdeclaro:#EAF4DF;
+  --texto:#2B2B33;--suave:#5E5E6E;--erro:#9A3412;--erroclaro:#FDECE3;
+  --raio:22px;--sombra:0 14px 40px rgba(33,4,86,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Montserrat',Arial,sans-serif;color:var(--texto);background:var(--lilas);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Sora','Montserrat',Arial,sans-serif;line-height:1.15;margin:0;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--verde3);outline-offset:3px}
+img{display:block;max-width:100%}
+
+.topo{position:sticky;top:0;z-index:50;background:rgba(33,4,86,.96);backdrop-filter:blur(8px);color:#fff}
+.topo-in{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:16px}
+.topo .marca{font-family:'Sora';font-weight:700;font-size:15px}
+.topo .marca span{color:var(--verde3)}
+.topo .esp{flex:1}
+.passos{display:flex;gap:6px;font-size:12px;font-weight:600}
+.passos span{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);opacity:.7}
+.passos span.feito{background:var(--verde2);opacity:1}
+.passos span.atual{background:#fff;color:var(--roxo);opacity:1}
+.barra{height:4px;background:rgba(255,255,255,.15)}
+.barra i{display:block;height:100%;width:0;background:var(--verde3);transition:width .6s}
+
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:14px 26px;font-weight:700;font-size:16px;background:var(--verde2);color:#fff;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(71,114,35,.35)}
+.btn:disabled{background:#B8B4C4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.claro{background:#fff;color:var(--roxo)}
+.btn.contorno{background:#fff;color:var(--roxo);box-shadow:inset 0 0 0 2px var(--roxo3)}
+
+/* capa */
+.capa{position:relative;min-height:min(86vh,760px);color:#fff;display:flex;align-items:center;overflow:hidden;background:#140433}
+.capa .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%;animation:zoom 16s ease-out both}
+@keyframes zoom{from{transform:scale(1.08)}to{transform:none}}
+.capa::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,4,51,.92) 0%,rgba(20,4,51,.7) 38%,rgba(20,4,51,0) 70%)}
+.capa-in{position:relative;z-index:2;max-width:1100px;width:100%;margin:0 auto;padding:70px 24px}
+.capa .logo{width:230px;height:auto;margin-bottom:40px}
+.selo{display:inline-block;background:var(--verde2);color:#fff;font-weight:700;font-size:12px;letter-spacing:.14em;border-radius:999px;padding:6px 14px}
+.capa .sobre{color:#C9F0A4;font-size:15px;font-weight:600;margin:18px 0 10px}
+.capa h1{font-size:clamp(44px,6vw,72px);max-width:12ch}
+.capa .linha{font-size:19px;margin:16px 0 30px;max-width:34ch}
+
+/* seções */
+.sec{padding:80px 24px;position:relative}
+.sec.branca{background:#fff}
+.sec-in{max-width:1000px;margin:0 auto}
+.rot{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--verde2);margin-bottom:12px}
+.rot .num{width:30px;height:30px;border-radius:50%;background:var(--roxo);color:#fff;display:grid;place-items:center;letter-spacing:0}
+.t2{font-size:clamp(28px,3.6vw,40px);color:var(--roxo)}
+.t2 span{display:block;color:var(--verde2)}
+.intro{font-size:18px;margin:16px 0 24px;max-width:62ch}
+.instr{font-weight:700;color:var(--roxo);border-left:5px solid var(--verde);padding:4px 0 4px 14px;margin:8px 0 22px}
+.sec.trancada .sec-in{filter:blur(5px) grayscale(.4);opacity:.45;pointer-events:none;user-select:none}
+.tranca{display:none;position:absolute;inset:0;z-index:5;place-items:start center;padding-top:110px}
+.sec.trancada .tranca{display:grid}
+.tranca div{background:#fff;color:var(--roxo);border-radius:999px;padding:12px 22px;font-weight:700;box-shadow:var(--sombra)}
+.seguir{margin-top:28px;display:none;justify-content:center}
+.seguir.on{display:flex}
+
+/* fotonovela */
+.historia{background:#0E0326;border-radius:26px;overflow:hidden;box-shadow:0 30px 70px rgba(33,4,86,.35)}
+.palco{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1a0b3d}
+.palco img.cena{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease}
+.palco img.cena.on{opacity:1}
+.rabichos{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.balao{position:absolute;z-index:4;background:#fff;color:#1d1d24;font-family:'Balsamiq Sans','Comic Sans MS',cursive;font-size:clamp(15px,1.7vw,20px);line-height:1.35;padding:14px 18px;border-radius:24px;box-shadow:0 8px 22px rgba(0,0,0,.25);opacity:0;transform:scale(.85);transition:opacity .35s .35s,transform .35s .35s}
+.balao.on{opacity:1;transform:none}
+.balao.pensa{border-radius:40px;font-style:italic;padding:16px 22px}
+.balao small{display:block;font-family:'Montserrat';font-style:normal;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--roxo3);margin-bottom:2px}
+.nav{display:flex;align-items:center;gap:14px;padding:12px 16px;color:#fff}
+.nav button.seta{width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center}
+.nav button.seta:hover{background:rgba(255,255,255,.22)}
+.nav button.seta:disabled{opacity:.3;cursor:default}
+.nav button.seta svg{width:20px;height:20px}
+.pontos{flex:1;display:flex;justify-content:center;gap:8px}
+.pontos i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.3)}
+.pontos i.on{background:var(--verde3);transform:scale(1.3)}
+.pontos i.vista{background:rgba(255,255,255,.75)}
+.cont{font-size:13px;opacity:.8;min-width:54px;text-align:right}
+.iniciar-hist{position:absolute;inset:0;z-index:6;display:grid;place-items:center;background:linear-gradient(180deg,rgba(14,3,38,.2),rgba(14,3,38,.75))}
+.iniciar-hist .btn{font-size:18px}
+
+/* decisão */
+.decisao{display:none;padding:26px clamp(16px,4vw,40px) 30px;color:#fff;background:#160540}
+.decisao.on{display:block;animation:surgir .4s ease}
+.decisao h3{font-size:clamp(20px,2.4vw,26px);margin-bottom:16px}
+.decisao h3 small{display:block;font-family:'Montserrat';font-size:12px;letter-spacing:.12em;color:var(--verde3);margin-bottom:6px}
+.ops{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.op{display:flex;gap:12px;align-items:flex-start;text-align:left;background:#fff;color:var(--texto);border:0;border-radius:16px;padding:14px 16px;font-size:15px;line-height:1.4;transition:transform .15s,box-shadow .15s}
+.op:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.op b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--roxo);color:#fff;display:grid;place-items:center;font-size:14px}
+.op.ok{box-shadow:inset 0 0 0 3px var(--verde3)}
+.op.nao{opacity:.55;box-shadow:inset 0 0 0 3px #E8A27C}
+.retorno{display:none;margin-top:16px;background:#fff;color:var(--texto);border-radius:18px;padding:20px 22px}
+.retorno.on{display:block;animation:surgir .35s}
+.retorno h4{font-size:20px;margin-bottom:6px}
+.retorno.ok h4{color:var(--verde2)}.retorno.nao h4{color:var(--erro)}
+.retorno .acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+@keyframes surgir{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* cartas */
+.cartas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.carta{perspective:1000px;height:250px;border:0;padding:0;background:none;text-align:left}
+.carta .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.carta.virada .in{transform:rotateY(180deg)}
+.carta .f,.carta .v{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;overflow:hidden}
+.carta .f{background:linear-gradient(140deg,var(--roxo),var(--roxo3));color:#fff;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center}
+.carta .f .n{width:64px;height:64px;border-radius:50%;background:#fff;color:var(--roxo);display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:26px}
+.carta .f h4{font-size:18px}
+.carta .f small{font-size:12px;opacity:.8}
+.carta .v{background:var(--verde2);color:#fff;transform:rotateY(180deg);padding:22px;justify-content:center;font-size:15px;line-height:1.5}
+.carta .v h4{font-size:16px;margin-bottom:8px;color:#E3F5CF}
+.destaque{margin-top:22px;background:var(--lilas);border-left:6px solid var(--verde);border-radius:18px;padding:18px 22px}
+.destaque b{color:var(--roxo)}
+.fonte{font-size:13px;color:var(--suave);margin-top:10px}
+
+/* quiz */
+.quiz{display:flex;flex-direction:column;gap:16px}
+.q{background:#fff;border-radius:var(--raio);padding:22px;box-shadow:var(--sombra)}
+.q .tipo{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde2);margin-bottom:8px}
+.q .enun{font-family:'Sora';font-weight:700;color:var(--roxo);font-size:18px;margin-bottom:12px}
+.alts{display:flex;flex-direction:column;gap:8px}
+.alt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--lilas);border:2px solid transparent;border-radius:14px;padding:12px 14px;font-size:15px;color:var(--texto);line-height:1.4}
+.alt .box{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--roxo3);background:#fff;display:grid;place-items:center;margin-top:1px}
+.alt.radio .box{border-radius:50%}
+.alt[aria-pressed="true"]{border-color:var(--roxo3);background:#fff}
+.alt[aria-pressed="true"] .box{background:var(--roxo);border-color:var(--roxo)}
+.alt[aria-pressed="true"] .box::after{content:"";width:8px;height:8px;border-radius:2px;background:#fff}
+.alt.radio[aria-pressed="true"] .box::after{border-radius:50%}
+.alt.gab-ok{border-color:var(--verde);background:var(--verdeclaro)}
+.alt.gab-nao{border-color:var(--erro);background:var(--erroclaro)}
+.q .fb{display:none;margin-top:12px;font-size:14px;border-radius:12px;padding:10px 14px}
+.q .fb.on{display:block}
+.q .fb.ok{background:var(--verdeclaro);color:var(--verde2)}
+.q .fb.nao{background:var(--erroclaro);color:var(--erro)}
+.barra-acoes{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.dica{font-size:13px;color:var(--suave)}
+.resultado{display:none;margin-top:18px;background:var(--roxo);color:#fff;border-radius:var(--raio);padding:24px;align-items:center;gap:20px}
+.resultado.on{display:flex;animation:surgir .4s}
+.resultado .pz{flex:none;width:90px;height:90px;border-radius:50%;background:#fff;color:var(--roxo);display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:26px}
+
+/* fim */
+.fim{background:#fff;padding:80px 24px 60px;text-align:center}
+.fim .logo{width:min(320px,80%);height:auto;margin:0 auto 30px}
+.fim h2{color:var(--roxo);font-size:clamp(26px,3.4vw,36px);margin-bottom:24px}
+.fim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;margin:0 auto;text-align:left}
+.fim-card{background:var(--lilas);border-radius:20px;padding:22px}
+.fim-card b{display:block;color:var(--roxo);font-family:'Sora';font-size:17px;margin-bottom:6px}
+.amostra{max-width:1000px;margin:28px auto 0;background:var(--verde2);color:#fff;border-radius:20px;padding:22px 24px;text-align:left}
+.amostra b{font-size:18px;display:block;margin-bottom:4px}
+.amostra a{color:#fff;font-weight:700}
+.rodape{text-align:center;padding:22px;color:var(--suave);font-size:13px;background:var(--lilas)}
+
+@media (max-width:860px){
+  .cartas{grid-template-columns:1fr 1fr}
+  .fim-grid{grid-template-columns:1fr}
+  .passos{display:none}
+}
+@media (max-width:600px){
+  .sec{padding:56px 16px}
+  .capa{min-height:auto}
+  .capa .foto{object-position:72% 50%}
+  .capa::after{background:linear-gradient(180deg,rgba(20,4,51,.35) 0%,rgba(20,4,51,.92) 62%)}
+  .capa-in{padding:150px 18px 40px}
+  .capa .logo{width:170px;margin-bottom:24px}
+  .ops{grid-template-columns:1fr}
+  .op{font-size:14px}
+  .cartas{grid-template-columns:1fr}
+  .carta{height:210px}
+  .resultado{flex-direction:column;text-align:center}
+  /* no celular, o balão sai da foto e fica logo abaixo dela */
+  .palco{overflow:visible;aspect-ratio:auto}
+  .palco img.cena{position:relative;aspect-ratio:16/9;display:none}
+  .palco img.cena.on{display:block}
+  .rabichos{display:none}
+  .balao{position:relative;left:auto!important;top:auto!important;right:auto!important;width:auto!important;margin:12px 14px 4px;font-size:16px}
+  .balao::before{content:"";position:absolute;top:-10px;left:var(--rx,30%);border:10px solid transparent;border-top:0;border-bottom-color:#fff}
+  .balao.pensa::before{width:12px;height:12px;border:0;border-radius:50%;background:#fff;top:-16px}
+  .iniciar-hist{position:absolute}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-in">
+    <div class="marca">Direitos Humanos <span>·</span> Pílula 4</div>
+    <div class="esp"></div>
+    <div class="passos" id="passos"><span data-p="historia">1 A história</span><span data-p="lei">2 A lei</span><span data-p="quiz">3 Desafio</span></div>
+  </div>
+  <div class="barra"><i id="barra"></i></div>
+</header>
+
+<section class="capa" id="capa">
+  <img class="foto" src="img/capa.webp" alt="Marcos, fiscal de contratos, diante de uma mina a céu aberto ao amanhecer">
+  <div class="capa-in">
+    <img class="logo" src="img/logo-cmoc-branco.png" alt="CMOC 10 anos no Brasil">
+    <span class="selo">AMOSTRA</span>
+    <p class="sobre">Trabalho forçado na cadeia de fornecedores · Direitos Humanos · Pílula 4</p>
+    <h1>A visita</h1>
+    <p class="linha">Marcos foi conferir uma obra. Encontrou uma situação que exige uma decisão.</p>
+    <button class="btn" data-ir="s-historia">Iniciar história →</button>
+  </div>
+</section>
+
+<!-- 1 HISTÓRIA -->
+<section class="sec" id="s-historia" data-passo="historia">
+  <div class="sec-in">
+    <div class="rot"><span class="num">1</span>A história</div>
+    <h2 class="t2">Uma visita de rotina. <span>O que você faria no lugar de Marcos?</span></h2>
+    <p class="intro">Acompanhe a história cena a cena. No final, você decide o que Marcos deve fazer.</p>
+    <div class="historia">
+      <div class="palco" id="palco">
+        <svg class="rabichos" id="rabichos" aria-hidden="true"></svg>
+        <div class="balao" id="balao" aria-live="polite"></div>
+        <div class="iniciar-hist" id="iniciarHist"><button class="btn">Iniciar história →</button></div>
+      </div>
+      <div class="nav">
+        <button class="seta" id="ant" aria-label="Cena anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="pontos" id="pontos"></div>
+        <span class="cont" id="cont"></span>
+        <button class="seta" id="prox" aria-label="Próxima cena"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="decisao" id="decisao">
+        <h3><small>MOMENTO DE DECISÃO</small>O que Marcos deve fazer?</h3>
+        <div class="ops" id="ops"></div>
+        <div class="retorno" id="retorno"></div>
+      </div>
+    </div>
+    <div class="seguir" id="seguir-historia"><button class="btn" data-ir="s-lei">Continuar ↓</button></div>
+  </div>
+</section>
+
+<!-- 2 LEI -->
+<section class="sec branca" id="s-lei" data-passo="lei">
+  <div class="tranca"><div>Conclua a história para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">2</span>O que diz a lei</div>
+    <h2 class="t2">Não é preciso haver correntes. <span>Basta um dos quatro elementos.</span></h2>
+    <p class="intro">No Brasil, reduzir alguém a condição análoga à de escravo é crime (Código Penal, art. 149). No caso de Marcos, havia sinais de três destes elementos.</p>
+    <div class="instr">Vire as 4 cartas para conhecer cada elemento.</div>
+    <div class="cartas" id="cartas"></div>
+    <div class="destaque"><b>A lei também pune</b> quem retém documentos ou objetos pessoais, mantém vigilância ostensiva ou cerceia o transporte para manter o trabalhador no local (art. 149, §1º). As carteiras guardadas pelo encarregado são um exemplo.</div>
+    <p class="fonte">Definição de trabalho forçado: Convenção 29 da OIT (1930), art. 2º.</p>
+    <div class="seguir" id="seguir-lei"><button class="btn" data-ir="s-quiz">Continuar ↓</button></div>
+  </div>
+</section>
+
+<!-- 3 DESAFIO -->
+<section class="sec" id="s-quiz" data-passo="quiz">
+  <div class="tranca"><div>Vire as cartas para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">3</span>Desafio</div>
+    <h2 class="t2">Três perguntas <span>para fechar a pílula.</span></h2>
+    <div class="quiz" id="quiz" style="margin-top:22px"></div>
+    <div class="barra-acoes"><button class="btn" id="enviar" disabled>Enviar respostas</button><span class="dica" id="dica">Responda às 3 questões para enviar.</span></div>
+    <div class="resultado" id="resultado"><div class="pz" id="pz"></div><div><h3 style="font-size:22px;margin-bottom:6px" id="resTit"></h3><p id="resTx"></p></div></div>
+  </div>
+</section>
+
+<!-- FIM -->
+<section class="fim" id="s-fim">
+  <img class="logo" src="img/logo-cmoc-cor.png" alt="CMOC 10 anos no Brasil">
+  <h2>Para levar</h2>
+  <div class="fim-grid">
+    <div class="fim-card"><b>Olhe a cadeia</b>Trabalho análogo à escravidão pode acontecer em fornecedores, e não só dentro da empresa.</div>
+    <div class="fim-card"><b>Relate fatos</b>Você não precisa ter certeza para relatar. Descreva o que viu e proteja quem falou com você.</div>
+    <div class="fim-card"><b>Use o canal</b>Acione o canal de denúncia da empresa. A apuração cabe às áreas responsáveis.</div>
+  </div>
+  <div class="amostra"><b>[AMOSTRA] Fim da amostra</b>Esta pílula demonstra o formato proposto. No projeto, conteúdos, casos, canais e identidade visual serão definidos e validados com a CMOC. <a href="../">Conheça também a versão ilustrada e interativa →</a></div>
+</section>
+<footer class="rodape">Caso fictício, criado para fins educacionais. Pessoas, empresas e locais não existem; as fotos são ilustrativas.</footer>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const REVISAO = new URLSearchParams(location.search).has('revisao');
+const feitos = {};
+
+/* cenas: tx/ty = boca ou cabeça de quem fala (em % da foto); x/y/w = posição do balão */
+const CENAS = [
+  {img:'c01', alt:'Marcos chega à frente de obra da terceirizada e acena', tipo:'fala', quem:'Marcos', t:'Bom dia! Vim conferir o andamento da drenagem.', x:38, y:7, w:30, tx:22, ty:17},
+  {img:'c02', alt:'Por cima do ombro de Marcos, o alojamento com colchões no chão', tipo:'pensa', quem:'Marcos', t:'Colchões no chão... e um banheiro só pra tanta gente?', x:58, y:6, w:34, tx:14, ty:22},
+  {img:'c03', alt:'Galões de água sem identificação no chão do alojamento', tipo:'pensa', quem:'Marcos', nome:true, t:'E essa água, de onde vem?', x:4, y:12, w:30, tx:null},
+  {img:'c04', alt:'Um trabalhador sentado na soleira fala com Marcos', tipo:'fala', quem:'Trabalhador', nome:true, t:'Aqui o turno começa às cinco. E só acaba depois das oito da noite.', x:3, y:5, w:38, tx:33, ty:43},
+  {img:'c05', alt:'Um trabalhador mais velho fala em voz baixa com Marcos', tipo:'fala', quem:'Trabalhador', nome:true, t:'O encarregado guarda nossas carteiras de trabalho, "pra não perder".', x:3, y:6, w:38, tx:52, ty:20},
+  {img:'c06', alt:'O trabalhador, de perfil, preocupado', tipo:'fala', quem:'Trabalhador', t:'E todo mundo deve pra cantina. Ninguém sai daqui antes de acertar.', x:4, y:16, w:40, tx:56, ty:58},
+  {img:'c07', alt:'Marcos, pensativo', tipo:'pensa', quem:'Marcos', t:'E agora, o que eu faço?', x:8, y:16, w:30, tx:58, ty:26}
+];
+const CENA_C = {img:'c08', alt:'Marcos registra o relato no notebook do escritório da obra', tipo:'fala', quem:'Marcos', t:'Vou relatar só o que vi e ouvi, onde e quando, sem expor quem falou comigo.', x:3, y:9, w:36, tx:58, ty:27};
+const OPS = [
+  {l:'A', t:'Não se envolver. Os trabalhadores são empregados da terceirizada, e não da empresa.', ok:false, tit:'Não é o melhor caminho.', fb:'A responsabilidade de respeitar os direitos humanos alcança a cadeia de fornecedores. Ignorar os sinais expõe pessoas a violações graves e a empresa a riscos legais e de reputação.'},
+  {l:'B', t:'Confrontar o encarregado na hora e exigir a devolução das carteiras.', ok:false, tit:'Atenção.', fb:'A intenção é boa, mas o confronto pode colocar os trabalhadores em risco de represália e prejudicar a apuração. O caminho é registrar e acionar quem tem atribuição para agir.'},
+  {l:'C', t:'Registrar o que viu e ouviu, sem expor os trabalhadores, e acionar o canal de denúncia e a área responsável pelo contrato.', ok:true, tit:'Esse é o caminho.', fb:'Marcos não precisa ter certeza para relatar. Ele descreve fatos (o que viu, onde, quando) e protege quem falou com ele. A apuração e as medidas cabem às áreas responsáveis e, quando for o caso, às autoridades.'},
+  {l:'D', t:'Suspender o contrato por conta própria e mandar todos embora do alojamento.', ok:false, tit:'Atenção.', fb:'Decisões sobre o contrato não cabem a uma pessoa sozinha. Encerrar tudo sem apuração pode deixar os trabalhadores desamparados. A resposta deve ser estruturada e priorizar as pessoas afetadas.'}
+];
+
+const palco = $('#palco'), balao = $('#balao'), rab = $('#rabichos');
+[...CENAS, CENA_C].forEach(c => { const i = new Image(); i.src = `img/${c.img}.webp`; i.alt = c.alt; i.className = 'cena'; i.dataset.img = c.img; i.draggable = false; palco.insertBefore(i, rab); });
+$('#pontos').innerHTML = CENAS.map(() => '<i></i>').join('');
+let atual = -1, mostrandoC = false; const vistas = new Set();
+
+function desenhaRabicho(c) {
+  rab.innerHTML = '';
+  if (getComputedStyle(rab).display === 'none' || c.tx == null) return;
+  const P = palco.getBoundingClientRect(), B = balao.getBoundingClientRect();
+  rab.setAttribute('viewBox', `0 0 ${P.width} ${P.height}`);
+  const tx = c.tx / 100 * P.width, ty = c.ty / 100 * P.height;
+  const bx = B.left - P.left, by = B.top - P.top, bw = B.width, bh = B.height;
+  const cx = Math.min(Math.max(tx, bx + 26), bx + bw - 26), cy = by + bh / 2;
+  if (c.tipo === 'pensa') {
+    const sx = Math.min(Math.max(tx, bx + 30), bx + bw - 30), sy = ty < by ? by : by + bh;
+    let h = '';
+    [[.3, 9], [.58, 6.5], [.8, 4.5]].forEach(([f, r]) => { h += `<circle cx="${sx + (tx - sx) * f}" cy="${sy + (ty - sy) * f}" r="${r * Math.max(.7, P.width / 1000)}" fill="#fff"/>`; });
+    rab.innerHTML = h; return;
+  }
+  // base do rabicho na borda do balão mais próxima do falante
+  let p1, p2; const lado = Math.max(14, bw * .07);
+  if (ty > by + bh) { p1 = [cx - lado, by + bh - 2]; p2 = [cx + lado, by + bh - 2]; }
+  else if (tx > bx + bw) { const yy = Math.min(Math.max(ty, by + 20), by + bh - 20); p1 = [bx + bw - 2, yy - lado]; p2 = [bx + bw - 2, yy + lado]; }
+  else { const xx = Math.min(Math.max(tx, bx + 26), bx + bw - 26); p1 = [xx - lado, by + 2]; p2 = [xx + lado, by + 2]; }
+  const ex = tx - (tx - (p1[0] + p2[0]) / 2) * .12, ey = ty - (ty - (p1[1] + p2[1]) / 2) * .12;
+  rab.innerHTML = `<path d="M${p1[0]} ${p1[1]} Q${(p1[0] + ex) / 2} ${(p1[1] + ey) / 2 + 4} ${ex} ${ey} Q${(p2[0] + ex) / 2} ${(p2[1] + ey) / 2} ${p2[0]} ${p2[1]} Z" fill="#fff"/>`;
+}
+function mostra(c) {
+  $$('img.cena', palco).forEach(i => i.classList.toggle('on', i.dataset.img === c.img));
+  balao.classList.remove('on'); rab.innerHTML = '';
+  setTimeout(() => {
+    balao.className = 'balao' + (c.tipo === 'pensa' ? ' pensa' : '');
+    balao.innerHTML = (c.nome ? `<small>${c.quem}</small>` : '') + c.t;
+    balao.style.left = c.x + '%'; balao.style.top = c.y + '%'; balao.style.width = c.w + '%';
+    balao.style.setProperty('--rx', (c.tx != null ? Math.min(Math.max(c.tx, 8), 88) : 20) + '%');
+    requestAnimationFrame(() => { balao.classList.add('on'); desenhaRabicho(c); });
+  }, 250);
+  palco.setAttribute('aria-label', c.alt + '. ' + (c.tipo === 'pensa' ? c.quem + ' pensa: ' : c.quem + ' diz: ') + c.t);
+}
+function vai(i) {
+  atual = Math.max(0, Math.min(CENAS.length - 1, i)); mostrandoC = false; vistas.add(atual);
+  mostra(CENAS[atual]);
+  $$('#pontos i').forEach((p, j) => { p.classList.toggle('on', j === atual); p.classList.toggle('vista', vistas.has(j) && j !== atual); });
+  $('#cont').textContent = `${atual + 1} de ${CENAS.length}`;
+  $('#ant').disabled = atual === 0;
+  $('#prox').disabled = atual === CENAS.length - 1;
+  if (atual === CENAS.length - 1) abreDecisao();
+}
+function abreDecisao() {
+  $('#ops').innerHTML = OPS.map((o, i) => `<button class="op" data-op="${i}"><b>${o.l}</b><span>${o.t}</span></button>`).join('');
+  $('#retorno').className = 'retorno'; $('#decisao').classList.add('on');
+}
+$('#iniciarHist button').addEventListener('click', () => { $('#iniciarHist').remove(); vai(0); });
+$('#ant').addEventListener('click', () => vai(mostrandoC ? CENAS.length - 1 : atual - 1));
+$('#prox').addEventListener('click', () => vai(atual + 1));
+document.addEventListener('keydown', e => { if (atual < 0 || e.target.closest('input,textarea')) return; const r = palco.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; if (e.key === 'ArrowRight' && !$('#prox').disabled) vai(atual + 1); if (e.key === 'ArrowLeft' && !$('#ant').disabled) $('#ant').click(); });
+$('#ops').addEventListener('click', e => {
+  const b = e.target.closest('[data-op]'); if (!b) return; const o = OPS[+b.dataset.op];
+  $$('.op').forEach(x => x.classList.remove('ok', 'nao')); b.classList.add(o.ok ? 'ok' : 'nao');
+  const r = $('#retorno'); r.className = 'retorno on ' + (o.ok ? 'ok' : 'nao');
+  r.innerHTML = `<h4>${o.tit}</h4><p>${o.fb}</p>` + (o.ok ? '<div class="acoes"><button class="btn" data-v="ver">Ver o que Marcos fez</button></div>' : '<p style="margin-top:10px;font-size:14px;color:#5E5E6E">Escolha outra opção.</p>');
+});
+$('#retorno').addEventListener('click', e => {
+  if (!e.target.closest('[data-v="ver"]')) return;
+  mostrandoC = true; mostra(CENA_C); $('#prox').disabled = true; $('#ant').disabled = false; $('#cont').textContent = 'Desfecho';
+  $$('#pontos i').forEach(p => p.classList.remove('on'));
+  palco.scrollIntoView({behavior:'smooth', block:'center'});
+  conclui('historia');
+});
+addEventListener('resize', () => { if (atual >= 0) desenhaRabicho(mostrandoC ? CENA_C : CENAS[atual]); });
+
+/* cartas */
+const CARTAS = [
+  ['Trabalho forçado','Trabalho exigido sob ameaça de punição, para o qual a pessoa não se ofereceu por vontade própria.'],
+  ['Jornada exaustiva','Jornada que, pela duração ou intensidade, leva a pessoa ao esgotamento e coloca em risco sua saúde e segurança.'],
+  ['Condições degradantes','Alojamento, alimentação, água ou higiene que negam a dignidade da pessoa trabalhadora.'],
+  ['Servidão por dívida','Restringir a saída do trabalhador por causa de dívida com o empregador ou com quem o representa.']
+];
+const viradas = new Set();
+$('#cartas').innerHTML = CARTAS.map(([t, d], i) => `<button class="carta" data-c="${i}" aria-label="${t}. Toque para virar."><div class="in"><div class="f"><div class="n">${i + 1}</div><h4>${t}</h4><small>Toque para virar</small></div><div class="v"><h4>${t}</h4><p>${d}</p></div></div></button>`).join('');
+$('#cartas').addEventListener('click', e => { const c = e.target.closest('.carta'); if (!c) return; c.classList.toggle('virada'); viradas.add(+c.dataset.c); if (viradas.size === 4) conclui('lei'); });
+
+/* quiz */
+const QUIZ = [
+  {tipo:'Múltipla escolha · marque todas as corretas', multi:true, e:'Quais situações da história são sinais de alerta de trabalho análogo à escravidão?',
+   a:['O encarregado guarda as carteiras de trabalho.','Ninguém sai antes de acertar a dívida da cantina.','O turno vai das 5h até depois das 20h.','A obra tem cones e sinalização de segurança.'], c:[0,1,2],
+   fb:'Retenção de documentos, dívida que impede a saída e jornada exaustiva são sinais de alerta. A sinalização da obra não é.'},
+  {tipo:'Verdadeiro ou falso', e:'Para haver trabalho análogo à escravidão, a pessoa precisa estar presa ou acorrentada.', a:['Verdadeiro','Falso'], c:[1],
+   fb:'Falso. Basta um dos quatro elementos do art. 149: trabalho forçado, jornada exaustiva, condições degradantes ou servidão por dívida.'},
+  {tipo:'Escolha uma', e:'Ao acionar o canal de denúncia, o que Marcos deve fazer?',
+   a:['Esperar ter certeza e reunir todas as provas antes.','Descrever o que viu e ouviu, onde e quando, protegendo quem falou com ele.','Contar o caso nos grupos da equipe para pressionar a terceirizada.'], c:[1],
+   fb:'Ninguém precisa ter certeza para relatar. Fatos objetivos e a proteção de quem falou permitem uma apuração segura.'}
+];
+const resp = QUIZ.map(() => new Set()); let enviado = false;
+$('#quiz').innerHTML = QUIZ.map((q, i) => `<div class="q" data-q="${i}"><div class="tipo">Questão ${i + 1} · ${q.tipo}</div><p class="enun">${q.e}</p><div class="alts">${q.a.map((t, j) => `<button class="alt ${q.multi ? '' : 'radio'}" data-a="${j}" aria-pressed="false"><span class="box"></span><span>${t}</span></button>`).join('')}</div><div class="fb"></div></div>`).join('');
+$('#quiz').addEventListener('click', e => {
+  const b = e.target.closest('.alt'); if (!b || enviado) return;
+  const qi = +b.closest('.q').dataset.q, j = +b.dataset.a, s = resp[qi];
+  if (QUIZ[qi].multi) { s.has(j) ? s.delete(j) : s.add(j); } else { s.clear(); s.add(j); }
+  $$('.alt', b.closest('.q')).forEach(x => x.setAttribute('aria-pressed', s.has(+x.dataset.a)));
+  const falta = resp.filter(r => !r.size).length;
+  $('#enviar').disabled = falta > 0; $('#dica').textContent = falta ? `Falta${falta > 1 ? 'm' : ''} ${falta} quest${falta > 1 ? 'ões' : 'ão'}.` : 'Tudo respondido.';
+});
+$('#enviar').addEventListener('click', () => {
+  enviado = true; let pts = 0;
+  QUIZ.forEach((q, i) => {
+    const s = resp[i], ok = q.c.length === s.size && q.c.every(c => s.has(c)); if (ok) pts++;
+    const box = $(`.q[data-q="${i}"]`);
+    $$('.alt', box).forEach(x => { const j = +x.dataset.a; if (q.c.includes(j)) x.classList.add('gab-ok'); else if (s.has(j)) x.classList.add('gab-nao'); });
+    const fb = $('.fb', box); fb.className = 'fb on ' + (ok ? 'ok' : 'nao'); fb.textContent = (ok ? 'Correto. ' : 'Não foi dessa vez. ') + q.fb;
+  });
+  $('#pz').textContent = pts + '/3'; $('#resTit').textContent = pts === 3 ? 'Excelente!' : pts === 2 ? 'Muito bem!' : 'Vale revisar.';
+  $('#resTx').textContent = pts >= 2 ? 'Você reconhece os sinais, conhece a lei e sabe como agir.' : 'Revise o gabarito comentado e a história de Marcos.';
+  $('#resultado').classList.add('on'); $('#enviar').disabled = true; $('#dica').textContent = ''; conclui('quiz');
+});
+
+/* passos e desbloqueio */
+const ORDEM = ['historia', 'lei', 'quiz'];
+function conclui(p) { feitos[p] = true; atualiza(); }
+function atualiza() {
+  const n = ORDEM.filter(p => feitos[p]).length; $('#barra').style.width = (n / 3 * 100) + '%';
+  ORDEM.forEach((p, i) => {
+    const s = $(`.sec[data-passo="${p}"]`), lib = REVISAO || i === 0 || feitos[ORDEM[i - 1]];
+    s.classList.toggle('trancada', !lib);
+    const seg = $('#seguir-' + p); if (seg) seg.classList.toggle('on', !!feitos[p]);
+    const tag = $(`#passos [data-p="${p}"]`); tag.classList.toggle('feito', !!feitos[p]); tag.classList.toggle('atual', lib && !feitos[p]);
+  });
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-ir]'); if (b) document.getElementById(b.dataset.ir).scrollIntoView({behavior:'smooth'}); });
+atualiza();
+})();
+</script>
+</body>
+</html>

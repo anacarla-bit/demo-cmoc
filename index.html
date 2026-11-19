@@ -48,6 +48,8 @@ button{font-family:inherit;cursor:pointer}
 /* capa */
 .capa{background:radial-gradient(1200px 600px at 80% 20%,#3a1a78 0%,var(--roxo) 60%);color:#fff;position:relative;overflow:hidden}
 .capa-in{max-width:1100px;margin:0 auto;padding:72px 24px 110px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.logo-capa{display:block;width:220px;height:auto;margin-bottom:30px}
+.logo-fim{display:block;width:260px;height:auto;margin:0 0 34px}
 .selo{display:inline-block;background:var(--verde2);color:#fff;font-weight:700;font-size:12px;letter-spacing:.14em;border-radius:999px;padding:6px 14px}
 .capa .sobre{color:#C9F0A4;font-size:15px;font-weight:600;margin:18px 0 12px}
 .capa h1{font-size:clamp(36px,5.4vw,58px)}
@@ -305,6 +307,8 @@ button{font-family:inherit;cursor:pointer}
 @media (max-width:860px){
   .capa-in{grid-template-columns:1fr;padding:48px 20px 90px;gap:20px}
   .capa-ilu{order:-1;max-width:300px;margin:0 auto}
+  .logo-capa{width:170px;margin-bottom:22px}
+  .logo-fim{width:200px}
   .objs,.fim-grid{grid-template-columns:1fr}
   .missao{grid-template-columns:1fr}
   .missao .marcos{width:150px;margin:0 auto;order:-1}
@@ -367,6 +371,7 @@ button{font-family:inherit;cursor:pointer}
 <section class="capa" id="capa">
   <div class="capa-in">
     <div>
+      <img class="logo-capa" src="img/logo-cmoc-branco.png" alt="CMOC 10 anos no Brasil">
       <span class="selo">AMOSTRA</span>
       <p class="sobre">Direitos Humanos: Fundamentos e Diligência · Pílula 4</p>
       <h1>Trabalho forçado <em>na cadeia de fornecedores</em></h1>
@@ -520,6 +525,7 @@ button{font-family:inherit;cursor:pointer}
 <section class="sec escura" id="s-fim" data-passo="fim" data-nome="Para levar">
   <div class="tranca"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Conclua a etapa anterior para liberar</div></div>
   <div class="sec-in">
+    <img class="logo-fim" src="img/logo-cmoc-branco.png" alt="CMOC 10 anos no Brasil">
     <div class="rot"><span class="num">8</span>Para levar</div>
     <h2 class="t2">Cada pessoa é parte <span>da devida diligência.</span></h2>
     <div class="fim-grid" style="margin-top:26px">
@@ -530,7 +536,7 @@ button{font-family:inherit;cursor:pointer}
     <h3 style="margin-top:40px;font-size:20px">Suas conquistas</h3>
     <div class="vitrine" id="vitrine"></div>
     <div class="barra-acoes"><button class="btn claro" id="recomecar">Recomeçar a pílula</button></div>
-    <div class="amostra"><b>[AMOSTRA] Fim da amostra</b>Esta pílula demonstra o formato proposto. No projeto, conteúdos, casos, canais e identidade visual serão definidos e validados com a CMOC.</div>
+    <div class="amostra"><b>[AMOSTRA] Fim da amostra</b>Esta pílula demonstra o formato proposto. No projeto, conteúdos, casos, canais e identidade visual serão definidos e validados com a CMOC. <a href="fotos/" style="color:#fff;font-weight:700">Conheça também a versão fotográfica →</a></div>
   </div>
 </section>
 
