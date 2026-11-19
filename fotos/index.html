@@ -44,8 +44,8 @@ img{display:block;max-width:100%}
 
 /* capa */
 .capa{position:relative;min-height:min(86vh,760px);color:#fff;display:flex;align-items:center;overflow:hidden;background:#140433}
-.capa .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%;animation:zoom 16s ease-out both}
-@keyframes zoom{from{transform:scale(1.08)}to{transform:none}}
+.capa .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 0%;transform-origin:70% 0%;animation:zoom 16s ease-out both}
+@keyframes zoom{from{transform:scale(1.05)}to{transform:none}}
 .capa::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,4,51,.92) 0%,rgba(20,4,51,.7) 38%,rgba(20,4,51,0) 70%)}
 .capa-in{position:relative;z-index:2;max-width:1100px;width:100%;margin:0 auto;padding:70px 24px}
 .capa .logo{width:230px;height:auto;margin-bottom:40px}
@@ -173,7 +173,7 @@ img{display:block;max-width:100%}
 @media (max-width:600px){
   .sec{padding:56px 16px}
   .capa{min-height:auto}
-  .capa .foto{object-position:72% 50%}
+  .capa .foto{object-position:72% 0%}
   .capa::after{background:linear-gradient(180deg,rgba(20,4,51,.35) 0%,rgba(20,4,51,.92) 62%)}
   .capa-in{padding:150px 18px 40px}
   .capa .logo{width:170px;margin-bottom:24px}
@@ -296,12 +296,12 @@ const feitos = {};
 /* cenas: tx/ty = boca ou cabeça de quem fala (em % da foto); x/y/w = posição do balão */
 const CENAS = [
   {img:'c01', alt:'Marcos chega à frente de obra da terceirizada e acena', tipo:'fala', quem:'Marcos', t:'Bom dia! Vim conferir o andamento da drenagem.', x:38, y:7, w:30, tx:22, ty:17},
-  {img:'c02', alt:'Por cima do ombro de Marcos, o alojamento com colchões no chão', tipo:'pensa', quem:'Marcos', t:'Colchões no chão... e um banheiro só pra tanta gente?', x:58, y:6, w:34, tx:14, ty:22},
+  {img:'c02', alt:'Por cima do ombro de Marcos, o alojamento com colchões no chão', tipo:'pensa', quem:'Marcos', t:'Colchões no chão... e um banheiro só pra tanta gente?', x:64, y:8, w:32, tx:17, ty:30},
   {img:'c03', alt:'Galões de água sem identificação no chão do alojamento', tipo:'pensa', quem:'Marcos', nome:true, t:'E essa água, de onde vem?', x:4, y:12, w:30, tx:null},
   {img:'c04', alt:'Um trabalhador sentado na soleira fala com Marcos', tipo:'fala', quem:'Trabalhador', nome:true, t:'Aqui o turno começa às cinco. E só acaba depois das oito da noite.', x:3, y:5, w:38, tx:33, ty:43},
   {img:'c05', alt:'Um trabalhador mais velho fala em voz baixa com Marcos', tipo:'fala', quem:'Trabalhador', nome:true, t:'O encarregado guarda nossas carteiras de trabalho, "pra não perder".', x:3, y:6, w:38, tx:52, ty:20},
-  {img:'c06', alt:'O trabalhador, de perfil, preocupado', tipo:'fala', quem:'Trabalhador', t:'E todo mundo deve pra cantina. Ninguém sai daqui antes de acertar.', x:4, y:16, w:40, tx:56, ty:58},
-  {img:'c07', alt:'Marcos, pensativo', tipo:'pensa', quem:'Marcos', t:'E agora, o que eu faço?', x:8, y:16, w:30, tx:58, ty:26}
+  {img:'c06', alt:'O trabalhador, de perfil, preocupado', tipo:'fala', quem:'Trabalhador', t:'E todo mundo deve pra cantina. Ninguém sai daqui antes de acertar.', x:4, y:14, w:40, tx:60, ty:57},
+  {img:'c07', alt:'Marcos, pensativo', tipo:'pensa', quem:'Marcos', t:'E agora, o que eu faço?', x:10, y:16, w:30, tx:70, ty:30}
 ];
 const CENA_C = {img:'c08', alt:'Marcos registra o relato no notebook do escritório da obra', tipo:'fala', quem:'Marcos', t:'Vou relatar só o que vi e ouvi, onde e quando, sem expor quem falou comigo.', x:3, y:9, w:36, tx:58, ty:27};
 const OPS = [
@@ -322,22 +322,33 @@ function desenhaRabicho(c) {
   const P = palco.getBoundingClientRect(), B = balao.getBoundingClientRect();
   rab.setAttribute('viewBox', `0 0 ${P.width} ${P.height}`);
   const tx = c.tx / 100 * P.width, ty = c.ty / 100 * P.height;
-  const bx = B.left - P.left, by = B.top - P.top, bw = B.width, bh = B.height;
-  const cx = Math.min(Math.max(tx, bx + 26), bx + bw - 26), cy = by + bh / 2;
+  const bx = B.left - P.left, by = B.top - P.top, bw = B.width, bh = B.height, r = 22;
+  // ponto de saída: na borda do balão, do lado do falante, longe dos cantos arredondados
+  let sx, sy, nx, ny;
+  if (tx > bx + bw) { sx = bx + bw; sy = Math.min(Math.max(ty, by + r + 8), by + bh - r - 8); nx = 1; ny = 0; }
+  else if (tx < bx) { sx = bx; sy = Math.min(Math.max(ty, by + r + 8), by + bh - r - 8); nx = -1; ny = 0; }
+  else if (ty > by + bh) { sx = Math.min(Math.max(tx, bx + r + 10), bx + bw - r - 10); sy = by + bh; nx = 0; ny = 1; }
+  else { sx = Math.min(Math.max(tx, bx + r + 10), bx + bw - r - 10); sy = by; nx = 0; ny = -1; }
+  const dx = tx - sx, dy = ty - sy, dist = Math.hypot(dx, dy) || 1, ux = dx / dist, uy = dy / dist;
+  const esc = Math.max(.6, Math.min(1.2, P.width / 900));
   if (c.tipo === 'pensa') {
-    const sx = Math.min(Math.max(tx, bx + 30), bx + bw - 30), sy = ty < by ? by : by + bh;
-    let h = '';
-    [[.3, 9], [.58, 6.5], [.8, 4.5]].forEach(([f, r]) => { h += `<circle cx="${sx + (tx - sx) * f}" cy="${sy + (ty - sy) * f}" r="${r * Math.max(.7, P.width / 1000)}" fill="#fff"/>`; });
-    rab.innerHTML = h; return;
+    // três bolinhas que diminuem na direção de quem pensa, sem encostar na cabeça
+    const passo = Math.min(dist * .22, 30 * esc); let h = '';
+    [[1, 9], [2.1, 6.5], [3, 4.5]].forEach(([k, rr]) => { h += `<circle cx="${sx + ux * passo * k}" cy="${sy + uy * passo * k}" r="${rr * esc}" fill="#fff"/>`; });
+    rab.innerHTML = `<g filter="url(#sombra)">${h}</g>` + defs(); return;
   }
-  // base do rabicho na borda do balão mais próxima do falante
-  let p1, p2; const lado = Math.max(14, bw * .07);
-  if (ty > by + bh) { p1 = [cx - lado, by + bh - 2]; p2 = [cx + lado, by + bh - 2]; }
-  else if (tx > bx + bw) { const yy = Math.min(Math.max(ty, by + 20), by + bh - 20); p1 = [bx + bw - 2, yy - lado]; p2 = [bx + bw - 2, yy + lado]; }
-  else { const xx = Math.min(Math.max(tx, bx + 26), bx + bw - 26); p1 = [xx - lado, by + 2]; p2 = [xx + lado, by + 2]; }
-  const ex = tx - (tx - (p1[0] + p2[0]) / 2) * .12, ey = ty - (ty - (p1[1] + p2[1]) / 2) * .12;
-  rab.innerHTML = `<path d="M${p1[0]} ${p1[1]} Q${(p1[0] + ex) / 2} ${(p1[1] + ey) / 2 + 4} ${ex} ${ey} Q${(p2[0] + ex) / 2} ${(p2[1] + ey) / 2} ${p2[0]} ${p2[1]} Z" fill="#fff"/>`;
+  // rabicho curto e curvo: aponta para a boca, mas para bem antes dela
+  const len = Math.min(dist * .4, 54 * esc), meia = 13 * esc;
+  const px = -ny, py = nx;                     // direção ao longo da borda
+  const b1 = [sx - px * meia, sy - py * meia], b2 = [sx + px * meia, sy + py * meia];
+  const tip = [sx + ux * len, sy + uy * len];
+  const curva = 8 * esc;                         // leve gancho
+  const c1 = [(b1[0] + tip[0]) / 2 + px * curva * .4, (b1[1] + tip[1]) / 2 + py * curva * .4];
+  const c2 = [(b2[0] + tip[0]) / 2 + px * curva, (b2[1] + tip[1]) / 2 + py * curva];
+  const ent = 3; // entra um pouco no balão para não aparecer emenda
+  rab.innerHTML = defs() + `<path filter="url(#sombra)" d="M${b1[0] - nx * ent} ${b1[1] - ny * ent} Q${c1[0]} ${c1[1]} ${tip[0]} ${tip[1]} Q${c2[0]} ${c2[1]} ${b2[0] - nx * ent} ${b2[1] - ny * ent} Z" fill="#fff"/>`;
 }
+const defs = () => '<defs><filter id="sombra" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity=".22"/></filter></defs>';
 function mostra(c) {
   $$('img.cena', palco).forEach(i => i.classList.toggle('on', i.dataset.img === c.img));
   balao.classList.remove('on'); rab.innerHTML = '';
