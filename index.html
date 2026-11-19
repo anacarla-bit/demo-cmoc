@@ -55,7 +55,8 @@ button{font-family:inherit;cursor:pointer}
 .capa .linha{font-size:19px;margin:18px 0 28px;max-width:30ch;opacity:.95}
 .capa .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin-top:22px;opacity:.9}
 .capa .meta b{color:#fff}
-.capa-ilu svg{width:100%;height:auto;display:block;filter:drop-shadow(0 30px 60px rgba(0,0,0,.35))}
+.capa-ilu img{width:100%;height:auto;display:block;aspect-ratio:1;object-fit:cover;border-radius:50%;border:10px solid #fff;box-shadow:0 30px 60px rgba(0,0,0,.35);animation:flutua 7s ease-in-out infinite}
+@keyframes flutua{50%{transform:translateY(-10px)}}
 .onda{position:absolute;left:0;right:0;bottom:-1px;line-height:0}
 .onda svg{width:100%;height:70px}
 
@@ -93,6 +94,8 @@ button{font-family:inherit;cursor:pointer}
 .seguir.on{display:flex;justify-content:center}
 
 /* objetivos */
+.missao{display:grid;grid-template-columns:1fr 170px;gap:30px;align-items:end}
+.missao .marcos{width:auto;max-height:300px;height:auto;display:block;justify-self:center;filter:drop-shadow(0 18px 24px rgba(33,4,86,.18))}
 .objs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .obj{background:#fff;border-radius:var(--raio);padding:22px;box-shadow:var(--sombra);display:flex;gap:14px;align-items:flex-start}
 .obj .ic{flex:none;width:46px;height:46px;border-radius:14px;background:var(--lilas2);display:grid;place-items:center}
@@ -104,7 +107,9 @@ button{font-family:inherit;cursor:pointer}
 .palco{position:relative;aspect-ratio:16/9;background:#1a0b3d;overflow:hidden}
 .palco .cena{position:absolute;inset:0;opacity:0;transition:opacity .7s ease}
 .palco .cena.on{opacity:1}
-.palco .cena svg{width:100%;height:100%;display:block}
+.palco .cena svg,.palco .cena img{width:100%;height:100%;display:block;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.kb{animation:kb 9s ease-out both;transform-origin:50% 60%}
+@keyframes kb{from{transform:scale(1.08)}to{transform:scale(1)}}
 .legenda{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:min(92%,760px);background:rgba(14,3,38,.82);color:#fff;border-radius:14px;padding:10px 16px;font-size:16px;line-height:1.45;text-align:center;transition:opacity .3s}
 .legenda:empty{opacity:0}
 .capitulo{position:absolute;left:16px;top:14px;background:rgba(255,255,255,.92);color:var(--roxo);font-size:12px;font-weight:700;border-radius:999px;padding:5px 12px;letter-spacing:.04em}
@@ -160,17 +165,17 @@ button{font-family:inherit;cursor:pointer}
 
 /* hotspots */
 .cena-hot{position:relative;border-radius:var(--raio);overflow:hidden;box-shadow:var(--sombra);background:#fff}
-.cena-hot svg{display:block;width:100%;height:auto}
-.hot{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:0;background:var(--verde2);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;box-shadow:0 0 0 0 rgba(71,114,35,.6);animation:anel 2s infinite}
+.cena-hot svg,.cena-hot img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+.hot{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:0;background:var(--verde2);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;box-shadow:0 0 0 0 rgba(71,114,35,.6);animation:anel 2s infinite}
 .hot.achado{background:var(--roxo);animation:none}
 .hot.achado::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:3px solid var(--verde3)}
 @keyframes anel{70%{box-shadow:0 0 0 16px rgba(71,114,35,0)}100%{box-shadow:0 0 0 0 rgba(71,114,35,0)}}
-.hot-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:start}
+.hot-grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
 .achados{background:#fff;border-radius:var(--raio);padding:22px;box-shadow:var(--sombra)}
 .achados h4{font-size:17px;color:var(--roxo);margin-bottom:6px}
 .contador{font-size:14px;color:var(--suave);margin-bottom:14px}
 .contador b{color:var(--verde2);font-size:20px}
-.achados ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.achados ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .achados li{border-radius:14px;padding:12px 14px;background:var(--lilas);font-size:14px;line-height:1.45;animation:surgir .35s ease}
 .achados li b{display:block;color:var(--roxo)}
 .achados li .tag{display:inline-block;margin-top:6px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--roxo);color:#fff;border-radius:999px;padding:3px 9px}
@@ -301,8 +306,12 @@ button{font-family:inherit;cursor:pointer}
   .capa-in{grid-template-columns:1fr;padding:48px 20px 90px;gap:20px}
   .capa-ilu{order:-1;max-width:300px;margin:0 auto}
   .objs,.fim-grid{grid-template-columns:1fr}
+  .missao{grid-template-columns:1fr}
+  .missao .marcos{width:150px;margin:0 auto;order:-1}
   .cartas{grid-template-columns:1fr 1fr}
   .hot-grid,.ordem-wrap{grid-template-columns:1fr}
+  .achados ol{grid-template-columns:1fr}
+  .hot{width:32px;height:32px;margin:-16px 0 0 -16px;font-size:14px}
   .zonas.z4{grid-template-columns:1fr 1fr}
   .trilha{display:none}
 }
@@ -321,7 +330,7 @@ button{font-family:inherit;cursor:pointer}
   .palco.dec .decisao{position:relative;inset:auto}
   .palco.ret .cena:not(.on){display:none}
   .palco.ret .cena.on{position:relative;inset:auto}
-  .palco.ret .cena.on svg{height:auto}
+  .palco.ret .cena.on svg,.palco.ret .cena.on img{height:auto}
   .palco.ret .retorno{position:relative;inset:auto;background:#0E0326;padding:14px}
   .retorno .card{padding:18px}
   .retorno .card h4{font-size:19px}
@@ -365,7 +374,7 @@ button{font-family:inherit;cursor:pointer}
       <button class="btn" id="comecar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Começar</button>
       <div class="meta"><span><b>≈ 12 min</b> de experiência</span><span><b>6</b> atividades</span><span><b>8</b> conquistas</span></div>
     </div>
-    <div class="capa-ilu" id="iluCapa"></div>
+    <div class="capa-ilu" id="iluCapa"><img src="img/capa-mina.webp" alt="Ilustração de uma mina a céu aberto com um caminhão"></div>
   </div>
   <div class="onda"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40C240 0 480 70 720 40s480-40 720 0v30H0z" fill="#F3EFF9"/></svg></div>
 </section>
@@ -374,8 +383,13 @@ button{font-family:inherit;cursor:pointer}
 <section class="sec" id="s-missao" data-nome="Sua missão">
   <div class="sec-in">
     <div class="rot"><span class="num">1</span>Sua missão</div>
-    <h2 class="t2">Você vai acompanhar Marcos. <span>E decidir com ele.</span></h2>
-    <p class="intro">Marcos é fiscal de contratos em uma unidade de mineração. Ao longo desta pílula, você vê o que ele viu, decide o que fazer e descobre o que a lei e a devida diligência dizem sobre isso.</p>
+    <div class="missao">
+      <div>
+        <h2 class="t2">Você vai acompanhar Marcos. <span>E decidir com ele.</span></h2>
+        <p class="intro">Marcos é fiscal de contratos em uma unidade de mineração. Ao longo desta pílula, você vê o que ele viu, decide o que fazer e descobre o que a lei e a devida diligência dizem sobre isso.</p>
+      </div>
+      <img class="marcos" src="img/marcos.webp" alt="Marcos, fiscal de contratos, com capacete, colete e prancheta">
+    </div>
     <div class="objs">
       <div class="obj"><div class="ic" data-ic="lupa"></div><div><small>Ao final, você vai</small>Reconhecer sinais de trabalho análogo à escravidão em empresas terceirizadas.</div></div>
       <div class="obj"><div class="ic" data-ic="balanca"></div><div><small>Ao final, você vai</small>Entender o que diz a lei e quais elementos caracterizam o crime.</div></div>
@@ -427,7 +441,7 @@ button{font-family:inherit;cursor:pointer}
       <div class="achados">
         <h4>Sinais encontrados</h4>
         <p class="contador"><b id="nAch">0</b> de 6</p>
-        <ol id="listaAch"><li class="vazio" style="background:none;padding:0">Nenhum sinal encontrado ainda.</li></ol>
+        <ol id="listaAch"><li class="vazio" style="background:none;padding:0;grid-column:1/-1">Nenhum sinal encontrado ainda.</li></ol>
       </div>
     </div>
     <div class="leve"><div class="tarja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>Leve com você</div><p>Um sinal isolado já merece atenção. Vários juntos pedem ação imediata.</p></div>
@@ -553,98 +567,16 @@ const IC = {
 $$('[data-ic]').forEach(e => e.innerHTML = IC[e.dataset.ic] || '');
 const medalhaSVG = (cor = C.ouro) => `<svg viewBox="0 0 56 56"><path d="M16 2h9l3 14-9 3zM40 2h-9l-3 14 9 3z" fill="${C.verde3}"/><path d="M16 2h9l3 14-9 3z" fill="${C.verde2}" opacity=".5"/><circle cx="28" cy="34" r="19" fill="${cor}"/><circle cx="28" cy="34" r="14" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><path d="M28 23.5l3.2 6.5 7.1 1-5.2 5 1.2 7-6.3-3.3-6.3 3.3 1.2-7-5.2-5 7.1-1z" fill="#fff"/></svg>`;
 
-/* ---------------- ilustrações (SVG em código) ---------------- */
-function pessoa(x, base, s, o) {
-  const pele = o.pele || C.pele1, camisa = o.camisa || C.roxo3, calca = o.calca || '#2B2F3A';
-  const boca = o.triste ? `<path d="M-12 -326 Q0 -338 12 -326" stroke="#222" stroke-width="4" fill="none" stroke-linecap="round"/>`
-    : o.bravo ? `<path d="M-12 -330 H12" stroke="#222" stroke-width="4" stroke-linecap="round"/><path d="M-22 -376 l14 6 M22 -376 l-14 6" stroke="#222" stroke-width="4" stroke-linecap="round"/>`
-    : `<path d="M-12 -340 Q0 -328 12 -340" stroke="#222" stroke-width="4" fill="none" stroke-linecap="round"/>`;
-  return `<g transform="translate(${x} ${base}) scale(${s})" class="${o.cls || ''}">
-    <rect x="-34" y="-150" width="28" height="150" rx="10" fill="${calca}"/><rect x="6" y="-150" width="28" height="150" rx="10" fill="${calca}"/>
-    <rect x="-40" y="-12" width="40" height="14" rx="6" fill="#1E1E24"/><rect x="2" y="-12" width="40" height="14" rx="6" fill="#1E1E24"/>
-    <rect x="-50" y="-300" width="100" height="165" rx="30" fill="${camisa}"/>
-    ${o.colete ? `<rect x="-50" y="-250" width="100" height="14" fill="${o.colete}"/><rect x="-50" y="-200" width="100" height="14" fill="${o.colete}"/>` : ''}
-    ${o.bracos === 'cruzados' ? `<rect x="-58" y="-235" width="116" height="34" rx="17" fill="${camisa}" stroke="rgba(0,0,0,.15)" stroke-width="3"/>`
-      : `<rect x="-72" y="-290" width="26" height="130" rx="13" fill="${camisa}"/><rect x="46" y="-290" width="26" height="130" rx="13" fill="${camisa}"/><circle cx="-59" cy="-158" r="13" fill="${pele}"/><circle cx="59" cy="-158" r="13" fill="${pele}"/>`}
-    <rect x="-12" y="-322" width="24" height="30" fill="${pele}"/><ellipse cx="0" cy="-360" rx="40" ry="46" fill="${pele}"/>
-    ${o.cabelo ? `<path d="M-42 -372 A42 30 0 0 1 42 -372 Z" fill="${o.cabelo}"/>` : ''}
-    ${o.capacete ? `<path d="M-48 -380 A48 36 0 0 1 48 -380 Z" fill="${o.capacete}"/><rect x="-56" y="-386" width="112" height="10" rx="4" fill="${o.capacete}"/>` : ''}
-    <circle cx="-14" cy="-360" r="4.5" fill="#222"/><circle cx="14" cy="-360" r="4.5" fill="#222"/>${boca}
-    ${o.prancheta ? `<rect x="40" y="-250" width="56" height="74" rx="6" fill="#7A5230"/><rect x="46" y="-240" width="44" height="60" rx="4" fill="#fff"/><path d="M52 -228h32M52 -216h32M52 -204h22" stroke="#bbb" stroke-width="4"/>` : ''}
-    ${o.celular ? `<rect x="44" y="-196" width="26" height="44" rx="5" fill="#222"/><rect x="48" y="-191" width="18" height="32" rx="2" fill="${C.verde3}"/>` : ''}
-    ${o.mochila ? `<rect x="-86" y="-270" width="42" height="80" rx="12" fill="#6B5A44"/>` : ''}
-  </g>`;
-}
-const caminhao = (x, y, s, cls = '') => `<g transform="translate(${x} ${y}) scale(${s})"><g class="${cls}">
-  <path d="M0 0H170L190-70H-10Z" fill="${C.ouro}"/><rect x="170" y="-60" width="70" height="60" rx="8" fill="#E09E2A"/><rect x="190" y="-50" width="36" height="24" rx="4" fill="#9FC3D9"/>
-  <rect x="0" y="0" width="240" height="18" fill="#2B2B2B"/><circle cx="40" cy="26" r="30" fill="#222"/><circle cx="40" cy="26" r="11" fill="#777"/><circle cx="190" cy="26" r="30" fill="#222"/><circle cx="190" cy="26" r="11" fill="#777"/></g></g>`;
+/* ---------------- ilustrações (imagens em img/) ---------------- */
+const im = (arq, alt, cls = 'kb') => () => `<img class="${cls}" src="img/${arq}.webp" alt="${alt}" draggable="false">`;
+const cenaVisita = im('cena1-visita', 'Marcos chega à frente de obra da terceirizada');
+const cenaAlojamento = im('cena2-alojamento', 'Alojamento da terceirizada: colchões no chão, um banheiro, galões de água');
+const cenaConversa = im('cena3-conversa', 'Um trabalhador conversa em voz baixa com Marcos');
+const cenaA = im('desfecho-a', 'Marcos vai embora e os trabalhadores continuam no alojamento');
+const cenaB = im('desfecho-b', 'O encarregado reage com hostilidade e o trabalhador fica com medo');
+const cenaC = im('desfecho-c', 'Marcos registra os fatos e aciona o canal de denúncia');
+const cenaD = im('desfecho-d', 'Os trabalhadores ficam do lado de fora, sem alojamento');
 const svg = (inner, vb = '0 0 1000 560', extra = '') => `<svg viewBox="${vb}" role="img" ${extra} xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
-
-const marcos = (x, base, s, cls) => pessoa(x, base, s, {pele:C.pele1, camisa:C.roxo3, capacete:'#fff', colete:C.ouro, cabelo:'#2a1a12', prancheta:true, cls});
-
-function cenaCapa() {
-  const bancos = ['#E2B577','#C98B3E','#B07332','#8E5A26','#6E431B'];
-  let b = '';
-  bancos.forEach((c, i) => { const t = 470 + i * 80, n = 60 + i * 70; b += `<path d="M${n} ${t}H${1000-n}L${950-n} ${t+80}H${n+50}Z" fill="${c}"/><rect x="${n+10}" y="${t}" width="${1000-2*n-20}" height="8" fill="rgba(0,0,0,.12)"/>`; });
-  return svg(`<defs><clipPath id="cc"><circle cx="500" cy="500" r="480"/></clipPath><linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B3E99"/><stop offset=".55" stop-color="#8E74C4"/></linearGradient></defs>
-    <g clip-path="url(#cc)"><rect width="1000" height="1000" fill="url(#ceu)"/><circle cx="720" cy="250" r="80" fill="${C.ouro}" class="pisca" opacity=".95"/>
-    <path d="M0 470C200 380 380 420 520 400S850 430 1000 400V1000H0Z" fill="${C.verde2}"/>${b}<rect y="870" width="1000" height="200" fill="#5A3612"/>
-    ${caminhao(540, 535, 1.1, 'caminhao')}</g><circle cx="500" cy="500" r="480" fill="none" stroke="#fff" stroke-width="16"/>`, '0 0 1000 1000', 'aria-label="Ilustração de uma mina a céu aberto com um caminhão"');
-}
-function cenaVisita() {
-  return svg(`<rect width="1000" height="560" fill="#E7DFF4"/><circle cx="850" cy="110" r="58" fill="${C.ouro}" opacity=".9"/>
-   <path d="M0 330C300 270 600 330 1000 280V560H0Z" fill="${C.verde3}"/><rect y="410" width="1000" height="150" fill="#E2B577"/><rect y="410" width="1000" height="12" fill="#C98B3E"/>
-   <rect x="120" y="230" width="14" height="190" fill="#6B6B6B"/><rect x="300" y="230" width="14" height="190" fill="#6B6B6B"/><rect x="95" y="150" width="245" height="130" rx="12" fill="${C.verde2}"/><rect x="112" y="166" width="211" height="98" rx="8" fill="#fff"/><rect x="130" y="182" width="120" height="14" fill="${C.roxo}"/><rect x="130" y="210" width="170" height="9" fill="#BDB3CF"/><rect x="130" y="228" width="140" height="9" fill="#BDB3CF"/><rect x="130" y="246" width="110" height="9" fill="#BDB3CF"/>
-   <path d="M420 425l18-60 18 60z" fill="#F07D2B"/><path d="M480 425l18-60 18 60z" fill="#F07D2B"/>
-   <rect x="560" y="440" width="260" height="58" rx="29" fill="#9AA3AD"/><ellipse cx="560" cy="469" rx="20" ry="29" fill="#7B848E"/>
-   ${caminhao(640, 395, .75, 'caminhao')}${marcos(330, 540, .6, 'anda')}`, '0 0 1000 560', 'aria-label="Marcos chega à frente de obra da terceirizada"');
-}
-function alojamento(comHot) {
-  return `<rect width="1000" height="560" fill="#D9CDEB"/>${[...Array(12)].map((_, i) => `<rect x="${i*90}" y="0" width="6" height="380" fill="#BFAFD6"/>`).join('')}
-   <rect y="380" width="1000" height="180" fill="#A88F6A"/>${[...Array(9)].map((_, i) => `<rect x="${i*120}" y="380" width="4" height="180" fill="#937A56"/>`).join('')}
-   <line x1="500" y1="0" x2="500" y2="70" stroke="#555" stroke-width="3"/><g class="balanca"><line x1="500" y1="0" x2="500" y2="70" stroke="transparent"/><circle cx="500" cy="84" r="16" fill="#FFE8A3"/></g>
-   <rect x="90" y="80" width="150" height="110" rx="8" fill="#fff"/><rect x="100" y="90" width="130" height="90" rx="4" fill="#9FC3D9"/><line x1="165" y1="90" x2="165" y2="180" stroke="#fff" stroke-width="6"/>
-   <circle cx="370" cy="150" r="48" fill="#fff" stroke="${C.roxo}" stroke-width="6"/><line x1="370" y1="150" x2="370" y2="118" stroke="${C.roxo}" stroke-width="6" stroke-linecap="round"/><g class="ponteiro"><line x1="370" y1="150" x2="396" y2="162" stroke="${C.roxo}" stroke-width="5" stroke-linecap="round"/></g>
-   <rect x="520" y="170" width="140" height="12" rx="3" fill="#8B6B4A"/><rect x="530" y="128" width="26" height="42" rx="3" fill="#1F4E8C"/><rect x="558" y="132" width="26" height="38" rx="3" fill="#1F4E8C"/><rect x="586" y="126" width="26" height="44" rx="3" fill="#163B6B"/><g transform="translate(628 138)"><path d="M0 12v-6a9 9 0 0118 0v6" fill="none" stroke="${C.roxo}" stroke-width="4"/><rect x="-4" y="12" width="26" height="20" rx="4" fill="${C.roxo}"/></g>
-   <rect x="700" y="150" width="120" height="230" rx="6" fill="#8B6B4A"/><circle cx="805" cy="270" r="7" fill="#E6C36A"/><rect x="735" y="170" width="50" height="22" rx="4" fill="#fff" opacity=".85"/><path d="M748 176h24M748 184h16" stroke="#8B6B4A" stroke-width="3"/>
-   <path d="M830 300h60l-6-18h-48z" fill="#7FA8C2"/><rect x="830" y="300" width="60" height="90" rx="16" fill="rgba(159,195,217,.9)"/><rect x="895" y="300" width="60" height="90" rx="16" fill="rgba(159,195,217,.9)"/><rect x="850" y="285" width="20" height="18" fill="#7FA8C2"/><rect x="915" y="285" width="20" height="18" fill="#7FA8C2"/>
-   <rect x="240" y="330" width="150" height="10" rx="3" fill="#6E5536"/><rect x="250" y="340" width="10" height="60" fill="#6E5536"/><rect x="370" y="340" width="10" height="60" fill="#6E5536"/><g transform="translate(272 300) rotate(-6)"><rect width="88" height="34" rx="4" fill="#F4E9C8"/><path d="M8 10h50M8 18h60M8 26h40" stroke="#B49A64" stroke-width="3"/><text x="74" y="25" font-family="Arial" font-weight="800" font-size="14" fill="${C.roxo}">R$</text></g>
-   ${[[40,450],[320,480],[600,450]].map(([x, y]) => `<rect x="${x}" y="${y}" width="240" height="62" rx="14" fill="#5C6F8A"/><rect x="${x}" y="${y}" width="240" height="20" rx="10" fill="#7D90AB"/><rect x="${x+14}" y="${y-14}" width="70" height="30" rx="12" fill="#E9E4D8"/>`).join('')}`;
-}
-function cenaAlojamento() { return svg(alojamento() + marcos(940, 560, .5, 'anda'), '0 0 1000 560', 'aria-label="Alojamento da terceirizada"'); }
-function cenaConversa() {
-  return svg(`<rect width="1000" height="560" fill="#E7DFF4"/><rect y="400" width="1000" height="160" fill="#A88F6A"/>
-   ${pessoa(330, 545, .72, {pele:C.pele2, camisa:'#7B8794', calca:'#3A3F4B', cabelo:'#1a1a1a', triste:true})}
-   ${marcos(640, 545, .72)}
-   <g class="surge"><rect x="80" y="40" width="300" height="110" rx="28" fill="#fff"/><path d="M230 148l20 50 22-50z" fill="#fff"/><circle cx="195" cy="95" r="9" fill="${C.roxo}"/><circle cx="230" cy="95" r="9" fill="${C.roxo}"/><circle cx="265" cy="95" r="9" fill="${C.roxo}"/></g>
-   <g class="surge"><rect x="760" y="60" width="150" height="190" rx="12" fill="#1F4E8C"/><rect x="760" y="60" width="18" height="190" fill="#163B6B"/><circle cx="843" cy="120" r="22" fill="#E6C36A"/><rect x="800" y="170" width="90" height="10" fill="rgba(255,255,255,.5)"/><rect x="800" y="190" width="70" height="10" fill="rgba(255,255,255,.5)"/><path d="M877 235v-12a28 28 0 0156 0v12" fill="none" stroke="${C.roxo}" stroke-width="12"/><rect x="868" y="232" width="74" height="62" rx="10" fill="${C.roxo}"/><circle cx="905" cy="258" r="9" fill="#fff"/></g>`, '0 0 1000 560', 'aria-label="Um trabalhador conversa com Marcos"');
-}
-function cenaA() {
-  return svg(`<rect width="1000" height="560" fill="#CFC7DD"/><rect y="400" width="1000" height="160" fill="#9C8A70"/>
-   ${pessoa(220, 545, .62, {pele:C.pele2, camisa:'#7B8794', triste:true, cabelo:'#1a1a1a'})}${pessoa(360, 545, .62, {pele:C.pele3, camisa:'#6E7A86', triste:true, cabelo:'#4a3020'})}
-   <g class="sai">${marcos(620, 545, .62)}</g><text x="720" y="90" text-anchor="middle" font-family="Sora,Arial" font-weight="700" font-size="34" fill="${C.roxo}" opacity=".85">Semanas depois…</text>`, '0 0 1000 560', 'aria-label="Marcos vai embora e os trabalhadores continuam no alojamento"');
-}
-function cenaB() {
-  return svg(`<rect width="1000" height="560" fill="#E7DFF4"/><rect y="400" width="1000" height="160" fill="#A88F6A"/>
-   ${marcos(300, 545, .72)}${pessoa(600, 545, .72, {pele:C.pele3, camisa:'#3A3F4B', bravo:true, bracos:'cruzados', cabelo:'#222'})}
-   <g opacity=".7">${pessoa(860, 545, .5, {pele:C.pele2, camisa:'#7B8794', triste:true, cabelo:'#1a1a1a'})}</g>
-   <g class="surge"><rect x="560" y="70" width="160" height="90" rx="24" fill="#fff"/><path d="M620 158l14 40 18-40z" fill="#fff"/><text x="640" y="135" text-anchor="middle" font-family="Arial" font-weight="900" font-size="54" fill="#9A3412">!</text></g>`, '0 0 1000 560', 'aria-label="O encarregado reage com hostilidade e o trabalhador fica com medo"');
-}
-function cenaC() {
-  return svg(`<rect width="1000" height="560" fill="#E7DFF4"/><rect y="400" width="1000" height="160" fill="#BFAFD6"/>
-   <rect x="380" y="330" width="420" height="16" rx="4" fill="#8B6B4A"/><rect x="400" y="346" width="14" height="120" fill="#8B6B4A"/><rect x="766" y="346" width="14" height="120" fill="#8B6B4A"/>
-   <rect x="520" y="200" width="220" height="130" rx="10" fill="#2B2F3A"/><rect x="532" y="212" width="196" height="106" rx="6" fill="#fff"/>
-   <g class="surge"><path d="M630 228l30 11v20c0 18-12 28-30 32-18-4-30-14-30-32v-20z" fill="${C.roxo}"/><path d="M617 262l9 9 17-18" stroke="${C.verde3}" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
-   ${pessoa(300, 545, .72, {pele:C.pele1, camisa:C.roxo3, cabelo:'#2a1a12', celular:true})}
-   <g class="surge"><rect x="80" y="60" width="270" height="120" rx="20" fill="#fff"/><path d="M110 98h150M110 122h190M110 146h120" stroke="#BDB3CF" stroke-width="10" stroke-linecap="round"/></g>`, '0 0 1000 560', 'aria-label="Marcos registra os fatos e aciona o canal de denúncia"');
-}
-function cenaD() {
-  return svg(`<rect width="1000" height="560" fill="#D9D2E4"/><circle cx="860" cy="100" r="50" fill="${C.ouro}" opacity=".6"/><rect y="400" width="1000" height="160" fill="#C9B48E"/>
-   ${pessoa(200, 545, .58, {pele:C.pele2, camisa:'#7B8794', triste:true, mochila:true, cabelo:'#1a1a1a'})}${pessoa(330, 545, .58, {pele:C.pele3, camisa:'#6E7A86', triste:true, mochila:true, cabelo:'#4a3020'})}${pessoa(460, 545, .58, {pele:C.pele1, camisa:'#8A7F96', triste:true, mochila:true, cabelo:'#222'})}
-   ${caminhao(650, 420, .7, 'sai')}`, '0 0 1000 560', 'aria-label="Os trabalhadores ficam do lado de fora, sem alojamento"');
-}
-
-$('#iluCapa').innerHTML = cenaCapa();
 
 /* ---------------- progresso e conquistas ---------------- */
 const PASSOS = ['video','sinais','lei','fatos','ordem','quiz'];
@@ -800,19 +732,19 @@ if (REVISAO) {
 
 /* ---------------- hotspots ---------------- */
 const HOTS = [
-  {x:16, y:86, t:'Colchões no chão', d:'Não há camas: os trabalhadores dormem em colchões direto no chão.', tag:'Condições degradantes'},
-  {x:76, y:47, t:'Um único banheiro', d:'Um só banheiro para muitos trabalhadores.', tag:'Condições degradantes'},
-  {x:89, y:61, t:'Água sem identificação', d:'Galões sem identificação: não há garantia de água potável.', tag:'Condições degradantes'},
-  {x:37, y:27, t:'Turno das 5h às 20h', d:'O turno começa às 5h e termina depois das 20h.', tag:'Jornada exaustiva'},
-  {x:58, y:27, t:'Carteiras guardadas', d:'O encarregado guarda as carteiras de trabalho "para não perder".', tag:'Retenção de documentos'},
-  {x:32, y:57, t:'Caderno da cantina', d:'Todos devem para a cantina, que desconta do salário. "Ninguém sai daqui antes de acertar."', tag:'Servidão por dívida'}
+  {x:40.5, y:85, t:'Colchões no chão', d:'Não há camas: os trabalhadores dormem em colchões direto no chão.', tag:'Condições degradantes'},
+  {x:77, y:40, t:'Um único banheiro', d:'Um só banheiro para muitos trabalhadores.', tag:'Condições degradantes'},
+  {x:92, y:70, t:'Água sem identificação', d:'Galões sem identificação: não há garantia de água potável.', tag:'Condições degradantes'},
+  {x:18.6, y:14.6, t:'Turno das 5h às 20h', d:'O turno começa às 5h e termina depois das 20h.', tag:'Jornada exaustiva'},
+  {x:32, y:21, t:'Carteiras guardadas', d:'O encarregado guarda as carteiras de trabalho "para não perder".', tag:'Retenção de documentos'},
+  {x:12.3, y:51, t:'Caderno da cantina', d:'Todos devem para a cantina, que desconta do salário. "Ninguém sai daqui antes de acertar."', tag:'Servidão por dívida'}
 ];
 const achados = new Set(estado.achados || []);
-$('#cenaHot').innerHTML = svg(alojamento(), '0 0 1000 560', 'aria-label="Alojamento da terceirizada. Use os botões numerados para explorar."') + HOTS.map((h, i) => `<button class="hot" style="left:${h.x}%;top:${h.y}%" data-h="${i}" aria-label="Ponto ${i + 1}">${i + 1}</button>`).join('');
+$('#cenaHot').innerHTML = '<img src="img/cena2-alojamento.webp" alt="Alojamento da terceirizada. Use os botões numerados para explorar." draggable="false">' + HOTS.map((h, i) => `<button class="hot" style="left:${h.x}%;top:${h.y}%" data-h="${i}" aria-label="Ponto ${i + 1}">${i + 1}</button>`).join('');
 function renderAchados() {
   $$('.hot').forEach(b => b.classList.toggle('achado', achados.has(+b.dataset.h)));
   $('#nAch').textContent = achados.size;
-  $('#listaAch').innerHTML = achados.size ? [...achados].map(i => `<li><b>${HOTS[i].t}</b>${HOTS[i].d}<br><span class="tag">${HOTS[i].tag}</span></li>`).join('') : '<li class="vazio" style="background:none;padding:0">Nenhum sinal encontrado ainda.</li>';
+  $('#listaAch').innerHTML = achados.size ? [...achados].map(i => `<li><b>${HOTS[i].t}</b>${HOTS[i].d}<br><span class="tag">${HOTS[i].tag}</span></li>`).join('') : '<li class="vazio" style="background:none;padding:0;grid-column:1/-1">Nenhum sinal encontrado ainda.</li>';
 }
 $('#cenaHot').addEventListener('click', e => {
   const b = e.target.closest('.hot'); if (!b) return; achados.add(+b.dataset.h); estado.achados = [...achados]; salvar(); renderAchados();
