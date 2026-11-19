@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Trabalho forçado na cadeia de fornecedores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --roxo:#210456; --roxo2:#3A1A78; --roxo3:#5B3E99; --lilas:#F3EFF9; --lilas2:#E4DCF2;
+  --verde:#5C922D; --verde2:#477223; --verde3:#8DBF5A; --verdeclaro:#EAF4DF;
+  --texto:#2B2B33; --suave:#5E5E6E; --branco:#fff; --erro:#9A3412; --erroclaro:#FDECE3;
+  --raio:22px; --sombra:0 14px 40px rgba(33,4,86,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Montserrat',Arial,sans-serif;color:var(--texto);background:var(--lilas);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Sora','Montserrat',Arial,sans-serif;line-height:1.15;margin:0;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--verde3);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* cabeçalho */
+.topo{position:sticky;top:0;z-index:50;background:rgba(33,4,86,.96);backdrop-filter:blur(8px);color:#fff}
+.topo-in{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:16px}
+.topo .marca{font-family:'Sora';font-weight:700;font-size:15px;white-space:nowrap}
+.topo .marca span{color:var(--verde3)}
+.topo .esp{flex:1}
+.topo .medalhas{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;white-space:nowrap}
+.topo .medalhas svg{width:20px;height:20px}
+.topo .pct{font-weight:700;font-size:13px;background:#fff;color:var(--roxo);border-radius:999px;padding:4px 12px;min-width:52px;text-align:center}
+.barra{height:4px;background:rgba(255,255,255,.15)}
+.barra i{display:block;height:100%;width:0;background:var(--verde3);transition:width .6s ease}
+
+/* trilha lateral */
+.trilha{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:10px}
+.trilha a{width:12px;height:12px;border-radius:50%;border:2px solid var(--roxo3);background:#fff;display:block;position:relative}
+.trilha a.feito{background:var(--verde);border-color:var(--verde)}
+.trilha a.atual{background:var(--roxo);border-color:var(--roxo);transform:scale(1.25)}
+.trilha a.trancado{opacity:.35}
+.trilha a span{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--roxo);color:#fff;font-size:12px;font-weight:600;padding:3px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.trilha a:hover span,.trilha a:focus span{opacity:1}
+
+/* capa */
+.capa{background:radial-gradient(1200px 600px at 80% 20%,#3a1a78 0%,var(--roxo) 60%);color:#fff;position:relative;overflow:hidden}
+.capa-in{max-width:1100px;margin:0 auto;padding:72px 24px 110px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.selo{display:inline-block;background:var(--verde2);color:#fff;font-weight:700;font-size:12px;letter-spacing:.14em;border-radius:999px;padding:6px 14px}
+.capa .sobre{color:#C9F0A4;font-size:15px;font-weight:600;margin:18px 0 12px}
+.capa h1{font-size:clamp(36px,5.4vw,58px)}
+.capa h1 em{font-style:normal;color:var(--verde3)}
+.capa .linha{font-size:19px;margin:18px 0 28px;max-width:30ch;opacity:.95}
+.capa .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin-top:22px;opacity:.9}
+.capa .meta b{color:#fff}
+.capa-ilu svg{width:100%;height:auto;display:block;filter:drop-shadow(0 30px 60px rgba(0,0,0,.35))}
+.onda{position:absolute;left:0;right:0;bottom:-1px;line-height:0}
+.onda svg{width:100%;height:70px}
+
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:14px 26px;font-weight:700;font-size:16px;background:var(--verde2);color:#fff;transition:transform .15s,box-shadow .15s,background .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(71,114,35,.35)}
+.btn:disabled{background:#B8B4C4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.contorno{background:#fff;color:var(--roxo);box-shadow:inset 0 0 0 2px var(--roxo3)}
+.btn.claro{background:#fff;color:var(--roxo)}
+.btn svg{width:18px;height:18px}
+
+/* seções */
+.sec{padding:84px 24px;position:relative}
+.sec.branca{background:#fff}
+.sec.escura{background:var(--roxo);color:#fff}
+.sec-in{max-width:1000px;margin:0 auto}
+.rot{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--verde2);margin-bottom:12px}
+.escura .rot{color:var(--verde3)}
+.rot .num{width:30px;height:30px;border-radius:50%;background:var(--roxo);color:#fff;display:grid;place-items:center;letter-spacing:0}
+.escura .rot .num{background:#fff;color:var(--roxo)}
+.t2{font-size:clamp(28px,3.6vw,40px);color:var(--roxo)}
+.t2 span{display:block;color:var(--verde2)}
+.escura .t2{color:#fff}.escura .t2 span{color:var(--verde3)}
+.intro{font-size:18px;margin:18px 0 26px;max-width:62ch}
+.instr{display:flex;gap:12px;align-items:flex-start;font-weight:700;color:var(--roxo);border-left:5px solid var(--verde);padding:4px 0 4px 14px;margin:8px 0 22px}
+.escura .instr{color:#fff;border-color:var(--verde3)}
+.instr svg{flex:none;width:22px;height:22px;margin-top:1px}
+
+/* bloqueio sequencial */
+.sec.trancada .sec-in{filter:blur(5px) grayscale(.4);opacity:.45;pointer-events:none;user-select:none}
+.tranca{display:none;position:absolute;inset:0;z-index:5;place-items:start center;padding-top:120px}
+.sec.trancada .tranca{display:grid}
+.tranca div{background:#fff;color:var(--roxo);border-radius:999px;padding:12px 22px;font-weight:700;box-shadow:var(--sombra);display:flex;gap:10px;align-items:center}
+.tranca svg{width:20px;height:20px}
+.seguir{margin-top:30px;display:none}
+.seguir.on{display:flex;justify-content:center}
+
+/* objetivos */
+.objs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.obj{background:#fff;border-radius:var(--raio);padding:22px;box-shadow:var(--sombra);display:flex;gap:14px;align-items:flex-start}
+.obj .ic{flex:none;width:46px;height:46px;border-radius:14px;background:var(--lilas2);display:grid;place-items:center}
+.obj .ic svg{width:26px;height:26px}
+.obj small{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--verde2);text-transform:uppercase;margin-bottom:4px}
+
+/* vídeo com decisão */
+.player{max-width:880px;margin:0 auto;background:#0E0326;border-radius:26px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+.palco{position:relative;aspect-ratio:16/9;background:#1a0b3d;overflow:hidden}
+.palco .cena{position:absolute;inset:0;opacity:0;transition:opacity .7s ease}
+.palco .cena.on{opacity:1}
+.palco .cena svg{width:100%;height:100%;display:block}
+.legenda{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:min(92%,760px);background:rgba(14,3,38,.82);color:#fff;border-radius:14px;padding:10px 16px;font-size:16px;line-height:1.45;text-align:center;transition:opacity .3s}
+.legenda:empty{opacity:0}
+.capitulo{position:absolute;left:16px;top:14px;background:rgba(255,255,255,.92);color:var(--roxo);font-size:12px;font-weight:700;border-radius:999px;padding:5px 12px;letter-spacing:.04em}
+.inicio-video{position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,3,38,.55);z-index:4}
+.inicio-video button{width:92px;height:92px;border-radius:50%;border:0;background:var(--verde2);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 12px rgba(141,191,90,.25);animation:pulso 1.8s infinite}
+.inicio-video button svg{width:38px;height:38px;margin-left:6px}
+@keyframes pulso{50%{box-shadow:0 0 0 22px rgba(141,191,90,.08)}}
+.decisao{position:absolute;inset:0;z-index:6;background:rgba(14,3,38,.86);display:none;flex-direction:column;justify-content:center;padding:22px clamp(14px,4vw,48px);color:#fff}
+.decisao.on{display:flex;animation:surgir .4s ease}
+.decisao h3{font-size:clamp(18px,2.4vw,26px);margin-bottom:14px}
+.decisao h3 small{display:block;font-family:'Montserrat';font-size:12px;letter-spacing:.12em;color:var(--verde3);margin-bottom:6px}
+.ops{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.op{display:flex;gap:12px;align-items:flex-start;text-align:left;background:#fff;color:var(--texto);border:0;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.4;transition:transform .15s,box-shadow .15s}
+.op:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.op b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--roxo);color:#fff;display:grid;place-items:center;font-size:13px}
+.op.vista{box-shadow:inset 0 0 0 2px var(--verde3)}
+.retorno{position:absolute;inset:0;z-index:7;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(14,3,38,.6)}
+.retorno.on{display:flex;animation:surgir .35s ease}
+.retorno .card{background:#fff;color:var(--texto);border-radius:20px;max-width:560px;padding:24px 26px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.retorno .card h4{font-size:22px;margin-bottom:8px}
+.retorno .card.ok h4{color:var(--verde2)}
+.retorno .card.nao h4{color:var(--erro)}
+.retorno .card .acoes{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.retorno .card .acoes .btn{height:auto;flex:none}
+@keyframes surgir{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.controles{display:flex;align-items:center;gap:12px;padding:12px 16px;color:#fff}
+.controles button{background:transparent;border:0;color:#fff;width:36px;height:36px;border-radius:50%;display:grid;place-items:center}
+.controles button:hover{background:rgba(255,255,255,.12)}
+.controles svg{width:20px;height:20px}
+.linha-tempo{flex:1;height:6px;background:rgba(255,255,255,.18);border-radius:6px;position:relative}
+.linha-tempo i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--verde3);border-radius:6px}
+.linha-tempo .marca{position:absolute;top:-4px;width:4px;height:14px;background:#fff;border-radius:2px}
+.linha-tempo .marca.dec{background:#F2B33D;width:14px;height:14px;border-radius:50%;top:-4px;margin-left:-5px}
+.tempo{font-size:13px;font-variant-numeric:tabular-nums;opacity:.85;min-width:46px;text-align:right}
+.nota-video{font-size:14px;margin-top:16px;opacity:.85;display:flex;gap:10px;align-items:flex-start}
+.nota-video svg{flex:none;width:20px;height:20px;margin-top:2px}
+
+/* animações das cenas */
+.anda{animation:anda 2.6s ease-out both}
+@keyframes anda{from{transform:translateX(-260px)}to{transform:none}}
+.caminhao{animation:cam 7s linear infinite}
+@keyframes cam{0%{transform:translateX(-40px)}50%{transform:translateX(60px)}100%{transform:translateX(-40px)}}
+.pisca{animation:pisca 1.6s ease-in-out infinite}
+@keyframes pisca{50%{opacity:.35}}
+.balanca{transform-box:fill-box;transform-origin:50% 0;animation:balanca 3s ease-in-out infinite}
+@keyframes balanca{50%{transform:rotate(6deg)}}
+.surge{animation:surge .8s .6s ease both}
+@keyframes surge{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.sai{animation:sai 4s ease-in both}
+@keyframes sai{to{transform:translateX(320px);opacity:.2}}
+.ponteiro{transform-box:view-box;transform-origin:370px 150px;animation:gira 6s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+
+/* hotspots */
+.cena-hot{position:relative;border-radius:var(--raio);overflow:hidden;box-shadow:var(--sombra);background:#fff}
+.cena-hot svg{display:block;width:100%;height:auto}
+.hot{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:0;background:var(--verde2);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;box-shadow:0 0 0 0 rgba(71,114,35,.6);animation:anel 2s infinite}
+.hot.achado{background:var(--roxo);animation:none}
+.hot.achado::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:3px solid var(--verde3)}
+@keyframes anel{70%{box-shadow:0 0 0 16px rgba(71,114,35,0)}100%{box-shadow:0 0 0 0 rgba(71,114,35,0)}}
+.hot-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:start}
+.achados{background:#fff;border-radius:var(--raio);padding:22px;box-shadow:var(--sombra)}
+.achados h4{font-size:17px;color:var(--roxo);margin-bottom:6px}
+.contador{font-size:14px;color:var(--suave);margin-bottom:14px}
+.contador b{color:var(--verde2);font-size:20px}
+.achados ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.achados li{border-radius:14px;padding:12px 14px;background:var(--lilas);font-size:14px;line-height:1.45;animation:surgir .35s ease}
+.achados li b{display:block;color:var(--roxo)}
+.achados li .tag{display:inline-block;margin-top:6px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--roxo);color:#fff;border-radius:999px;padding:3px 9px}
+.achados .vazio{font-size:14px;color:var(--suave);font-style:italic}
+
+/* cartas */
+.cartas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.carta{perspective:1000px;height:270px;border:0;padding:0;background:none;text-align:left}
+.carta .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.carta.virada .in{transform:rotateY(180deg)}
+.carta .f,.carta .v{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.carta .f{background:linear-gradient(140deg,var(--roxo),var(--roxo3));color:#fff;align-items:center;justify-content:center;gap:16px;padding:20px;text-align:center}
+.carta .f .circ{width:104px;height:104px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.carta .f .circ svg{width:60px;height:60px}
+.carta .f h4{font-size:18px}
+.carta .f small{font-size:12px;opacity:.8;display:flex;gap:6px;align-items:center}
+.carta .v{background:var(--verde2);color:#fff;transform:rotateY(180deg);padding:22px;justify-content:center;font-size:15px;line-height:1.5}
+.carta .v h4{font-size:16px;margin-bottom:8px;color:#E3F5CF}
+.destaque{margin-top:24px;background:var(--lilas);border-left:6px solid var(--verde);border-radius:18px;padding:20px 24px;font-size:16px}
+.destaque b{color:var(--roxo)}
+.fonte{font-size:13px;color:var(--suave);margin-top:12px}
+
+/* arrastar */
+.dnd{display:grid;gap:18px}
+.banco{display:flex;flex-wrap:wrap;gap:10px;min-height:64px;padding:14px;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 2px var(--lilas2)}
+.banco:empty::before{content:"Todos os itens foram posicionados.";font-size:14px;color:var(--suave);font-style:italic;align-self:center}
+.chip{touch-action:none;user-select:none;-webkit-user-select:none;background:#fff;color:var(--texto);border:2px solid var(--roxo3);border-radius:14px;padding:10px 14px;font-size:14px;font-weight:600;line-height:1.35;cursor:grab;display:flex;gap:8px;align-items:center;transition:transform .15s,box-shadow .15s,border-color .15s;max-width:100%}
+.chip::before{content:"";flex:none;width:10px;height:16px;background:radial-gradient(circle,var(--roxo3) 1.5px,transparent 1.6px) 0 0/5px 5px;opacity:.7}
+.chip:hover{box-shadow:0 6px 16px rgba(33,4,86,.15)}
+.chip.sel{border-color:var(--verde);box-shadow:0 0 0 4px rgba(92,146,45,.25);transform:translateY(-2px)}
+.chip.certo{border-color:var(--verde);background:var(--verdeclaro);cursor:default}
+.chip.certo::before{background:none;width:16px;height:16px;content:"✓";color:var(--verde2);font-weight:800;opacity:1;display:grid;place-items:center}
+.chip.errado{border-color:var(--erro);background:var(--erroclaro);animation:treme .4s}
+@keyframes treme{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fantasma{position:fixed;z-index:999;pointer-events:none;opacity:.95;transform:rotate(-2deg);box-shadow:0 18px 40px rgba(33,4,86,.3)}
+.zonas{display:grid;gap:14px}
+.zonas.z4{grid-template-columns:repeat(4,1fr)}
+.zonas.z2{grid-template-columns:1fr 1fr}
+.zona{border-radius:18px;background:var(--lilas);border:2px dashed var(--roxo3);padding:14px;min-height:150px;display:flex;flex-direction:column;gap:8px;transition:background .15s,border-color .15s}
+.sec.branca .zona{background:var(--lilas)}
+.zona h4{font-size:15px;color:var(--roxo);display:flex;gap:8px;align-items:center}
+.zona h4 svg{width:22px;height:22px;flex:none}
+.zona.sobre{background:var(--verdeclaro);border-color:var(--verde);border-style:solid}
+.zona.alvo-tap{border-color:var(--verde)}
+.zona .chip{font-size:13px;padding:8px 10px}
+.barra-acoes{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.msg{font-size:15px;font-weight:600;border-radius:14px;padding:12px 16px;display:none}
+.msg.on{display:block;animation:surgir .3s}
+.msg.ok{background:var(--verdeclaro);color:var(--verde2)}
+.msg.nao{background:var(--erroclaro);color:var(--erro)}
+.dica-toque{font-size:13px;color:var(--suave)}
+
+/* ordenar */
+.ordem{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;counter-reset:passo}
+.ordem li{touch-action:none;user-select:none;-webkit-user-select:none;display:flex;align-items:center;gap:14px;background:#fff;border:2px solid var(--lilas2);border-radius:16px;padding:12px 14px;cursor:grab;transition:border-color .15s,box-shadow .15s,background .15s}
+.ordem li .n{counter-increment:passo;flex:none;width:34px;height:34px;border-radius:50%;background:var(--roxo);color:#fff;display:grid;place-items:center;font-weight:700}
+.ordem li .n::before{content:counter(passo)}
+.ordem li .tx{flex:1}
+.ordem li .tx b{display:block;color:var(--roxo);font-family:'Sora';font-size:17px}
+.ordem li .tx span{display:none;font-size:15px;margin-top:4px}
+.ordem.resolvida li .tx span{display:block;animation:surgir .4s}
+.ordem li .mv{display:flex;flex-direction:column;gap:2px}
+.ordem li .mv button{border:0;background:var(--lilas);color:var(--roxo);width:30px;height:24px;border-radius:8px;display:grid;place-items:center}
+.ordem li .mv svg{width:14px;height:14px}
+.ordem li.arrastando{opacity:.4}
+.ordem li.certo{border-color:var(--verde);background:var(--verdeclaro)}
+.ordem li.errado{border-color:var(--erro)}
+.ordem.resolvida li{cursor:default}
+.ordem.resolvida .mv{display:none}
+.ordem-wrap{display:grid;grid-template-columns:1fr 280px;gap:22px;align-items:start}
+.ordem-aside{background:var(--roxo);color:#fff;border-radius:var(--raio);padding:22px;font-size:15px}
+.ordem-aside b{color:var(--verde3)}
+
+/* quiz */
+.quiz{display:flex;flex-direction:column;gap:18px}
+.q{background:#fff;border-radius:var(--raio);padding:24px;box-shadow:var(--sombra)}
+.q .enun{font-family:'Sora';font-weight:700;color:var(--roxo);font-size:18px;margin-bottom:6px}
+.q .tipo{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde2);margin-bottom:12px}
+.alts{display:flex;flex-direction:column;gap:8px}
+.alt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--lilas);border:2px solid transparent;border-radius:14px;padding:12px 14px;font-size:15px;color:var(--texto);line-height:1.4}
+.alt .box{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--roxo3);background:#fff;display:grid;place-items:center;margin-top:1px}
+.alt.radio .box{border-radius:50%}
+.alt[aria-pressed="true"]{border-color:var(--roxo3);background:#fff}
+.alt[aria-pressed="true"] .box{background:var(--roxo);border-color:var(--roxo)}
+.alt[aria-pressed="true"] .box::after{content:"";width:8px;height:8px;border-radius:2px;background:#fff}
+.alt.radio[aria-pressed="true"] .box::after{border-radius:50%}
+.alt.gab-ok{border-color:var(--verde);background:var(--verdeclaro)}
+.alt.gab-nao{border-color:var(--erro);background:var(--erroclaro)}
+.q .fb{display:none;margin-top:12px;font-size:14px;border-radius:12px;padding:10px 14px}
+.q .fb.on{display:block}
+.q .fb.ok{background:var(--verdeclaro);color:var(--verde2)}
+.q .fb.nao{background:var(--erroclaro);color:var(--erro)}
+.resultado{display:none;background:var(--roxo);color:#fff;border-radius:var(--raio);padding:26px;align-items:center;gap:22px}
+.resultado.on{display:flex;animation:surgir .4s}
+.resultado .pz{flex:none;width:96px;height:96px;border-radius:50%;background:#fff;color:var(--roxo);display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:28px}
+
+/* leve com você */
+.leve{margin-top:26px;border-radius:18px;overflow:hidden;box-shadow:var(--sombra)}
+.leve .tarja{background:var(--roxo);color:#fff;display:flex;gap:10px;align-items:center;padding:10px 18px;font-weight:700;font-size:14px;letter-spacing:.04em}
+.leve .tarja svg{width:20px;height:20px}
+.leve p{background:#fff;padding:16px 18px;font-size:16px}
+
+/* final */
+.fim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fim-card{background:#fff;color:var(--texto);border-radius:20px;padding:22px}
+.fim-card b{display:block;color:var(--roxo);font-family:'Sora';font-size:17px;margin-bottom:6px}
+.vitrine{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0}
+.med{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:10px 14px;font-size:14px;font-weight:600;opacity:.35}
+.med.ganha{opacity:1;background:rgba(141,191,90,.18);border-color:var(--verde3)}
+.med svg{width:28px;height:28px}
+.amostra{margin-top:28px;background:var(--verde2);color:#fff;border-radius:20px;padding:22px 24px}
+.amostra b{font-size:18px;display:block;margin-bottom:4px}
+.rodape{text-align:center;padding:26px;color:var(--suave);font-size:13px;background:var(--lilas)}
+
+/* conquista */
+.toast{position:fixed;left:50%;bottom:28px;z-index:100;transform:translate(-50%,140%);background:#fff;color:var(--roxo);border-radius:20px;padding:14px 20px 14px 14px;display:flex;align-items:center;gap:14px;box-shadow:0 20px 50px rgba(33,4,86,.35);transition:transform .5s cubic-bezier(.2,1.3,.4,1);max-width:calc(100% - 32px)}
+.toast.on{transform:translate(-50%,0)}
+.toast .mdl{flex:none;width:56px;height:56px}
+.toast .mdl svg{width:100%;height:100%;animation:giro .9s ease}
+@keyframes giro{from{transform:rotateY(180deg) scale(.4)}to{transform:none}}
+.toast small{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--verde2);text-transform:uppercase}
+.toast b{font-family:'Sora';font-size:16px}
+.confete{position:fixed;inset:0;pointer-events:none;z-index:99;overflow:hidden}
+.confete i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:cai 1.8s ease-in forwards}
+@keyframes cai{to{transform:translateY(105vh) rotate(540deg);opacity:.8}}
+
+@media (max-width:860px){
+  .capa-in{grid-template-columns:1fr;padding:48px 20px 90px;gap:20px}
+  .capa-ilu{order:-1;max-width:300px;margin:0 auto}
+  .objs,.fim-grid{grid-template-columns:1fr}
+  .cartas{grid-template-columns:1fr 1fr}
+  .hot-grid,.ordem-wrap{grid-template-columns:1fr}
+  .zonas.z4{grid-template-columns:1fr 1fr}
+  .trilha{display:none}
+}
+@media (max-width:600px){
+  .sec{padding:60px 16px}
+  .topo .marca{font-size:13px}
+  .topo .medalhas span{display:none}
+  .ops{grid-template-columns:1fr;gap:6px}
+  .op{padding:8px 10px;font-size:12.5px}
+  .op b{width:22px;height:22px;font-size:11px}
+  .decisao{padding:18px 14px}
+  .decisao h3{font-size:18px;margin-bottom:10px}
+  /* no celular, decisão e retorno saem do quadro 16:9 e ganham altura própria */
+  .palco.dec,.palco.ret{aspect-ratio:auto}
+  .palco.dec .cena,.palco.dec .capitulo{display:none}
+  .palco.dec .decisao{position:relative;inset:auto}
+  .palco.ret .cena:not(.on){display:none}
+  .palco.ret .cena.on{position:relative;inset:auto}
+  .palco.ret .cena.on svg{height:auto}
+  .palco.ret .retorno{position:relative;inset:auto;background:#0E0326;padding:14px}
+  .retorno .card{padding:18px}
+  .retorno .card h4{font-size:19px}
+  .legenda{font-size:13px;bottom:8px;padding:7px 10px}
+  .capitulo{font-size:10px;top:8px;left:8px}
+  .cartas{grid-template-columns:1fr}
+  .carta{height:220px}
+  .zonas.z4,.zonas.z2{grid-template-columns:1fr}
+  .zona{min-height:96px}
+  .resultado{flex-direction:column;text-align:center}
+  .intro{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="topo" aria-label="Progresso">
+  <div class="topo-in">
+    <div class="marca">Direitos Humanos <span>·</span> Pílula 4</div>
+    <div class="esp"></div>
+    <div class="medalhas" title="Conquistas"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="14" r="7" fill="#F2B33D"/><path d="M8 2h3l1 5-3 1zM16 2h-3l-1 5 3 1z" fill="#8DBF5A"/><path d="M12 10.5l1.1 2.2 2.4.3-1.8 1.6.5 2.4-2.2-1.2-2.2 1.2.5-2.4-1.8-1.6 2.4-.3z" fill="#fff"/></svg><b id="nMed">0</b>/<span id="tMed">8</span><span>&nbsp;conquistas</span></div>
+    <div class="pct" id="pct" aria-live="polite">0%</div>
+  </div>
+  <div class="barra"><i id="barra"></i></div>
+</header>
+
+<nav class="trilha" id="trilha" aria-label="Etapas"></nav>
+
+<!-- CAPA -->
+<section class="capa" id="capa">
+  <div class="capa-in">
+    <div>
+      <span class="selo">AMOSTRA</span>
+      <p class="sobre">Direitos Humanos: Fundamentos e Diligência · Pílula 4</p>
+      <h1>Trabalho forçado <em>na cadeia de fornecedores</em></h1>
+      <p class="linha">Um caso para reconhecer sinais e agir com responsabilidade.</p>
+      <button class="btn" id="comecar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Começar</button>
+      <div class="meta"><span><b>≈ 12 min</b> de experiência</span><span><b>6</b> atividades</span><span><b>8</b> conquistas</span></div>
+    </div>
+    <div class="capa-ilu" id="iluCapa"></div>
+  </div>
+  <div class="onda"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40C240 0 480 70 720 40s480-40 720 0v30H0z" fill="#F3EFF9"/></svg></div>
+</section>
+
+<!-- 1 MISSÃO -->
+<section class="sec" id="s-missao" data-nome="Sua missão">
+  <div class="sec-in">
+    <div class="rot"><span class="num">1</span>Sua missão</div>
+    <h2 class="t2">Você vai acompanhar Marcos. <span>E decidir com ele.</span></h2>
+    <p class="intro">Marcos é fiscal de contratos em uma unidade de mineração. Ao longo desta pílula, você vê o que ele viu, decide o que fazer e descobre o que a lei e a devida diligência dizem sobre isso.</p>
+    <div class="objs">
+      <div class="obj"><div class="ic" data-ic="lupa"></div><div><small>Ao final, você vai</small>Reconhecer sinais de trabalho análogo à escravidão em empresas terceirizadas.</div></div>
+      <div class="obj"><div class="ic" data-ic="balanca"></div><div><small>Ao final, você vai</small>Entender o que diz a lei e quais elementos caracterizam o crime.</div></div>
+      <div class="obj"><div class="ic" data-ic="escudo"></div><div><small>Ao final, você vai</small>Saber como agir e qual é o papel da empresa na prevenção.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 VÍDEO COM DECISÃO -->
+<section class="sec escura" id="s-video" data-passo="video" data-nome="O caso em vídeo">
+  <div class="tranca"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Conclua a etapa anterior para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">2</span>O caso · vídeo com decisão</div>
+    <h2 class="t2">Uma visita de rotina. <span>Um alojamento que preocupa.</span></h2>
+    <p class="intro">Assista ao caso. No momento da decisão, o vídeo para e você escolhe o que Marcos deve fazer. Cada escolha mostra uma consequência.</p>
+    <div class="player">
+      <div class="palco" id="palco">
+        <div class="capitulo" id="capitulo">Cena 1 · A visita</div>
+        <div class="legenda" id="legenda" aria-live="polite"></div>
+        <div class="inicio-video" id="inicioVideo"><button aria-label="Assistir ao caso"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></button></div>
+        <div class="decisao" id="decisao" role="dialog" aria-label="Decisão">
+          <h3><small>MOMENTO DE DECISÃO</small>O que Marcos deve fazer?</h3>
+          <div class="ops" id="ops"></div>
+        </div>
+        <div class="retorno" id="retorno"><div class="card" id="retornoCard"></div></div>
+      </div>
+      <div class="controles">
+        <button id="vPlay" aria-label="Pausar"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+        <button id="vReinicio" aria-label="Voltar ao início do vídeo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 12a8 8 0 108-8H7"/><path d="M8 1L5 4l3 3"/></svg></button>
+        <div class="linha-tempo" id="linhaTempo"><i id="progVideo"></i></div>
+        <div class="tempo" id="tempo">0:00</div>
+      </div>
+    </div>
+    <p class="nota-video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>Prévia do formato. No projeto, esta cena é produzida em animação 2D, com locução profissional, trilha e legendas.</p>
+    <div class="seguir" id="seguir-video"><button class="btn claro" data-ir="s-sinais">Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button></div>
+  </div>
+</section>
+
+<!-- 3 HOTSPOTS -->
+<section class="sec" id="s-sinais" data-passo="sinais" data-nome="Encontre os sinais">
+  <div class="tranca"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Conclua a etapa anterior para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">3</span>Olhar atento</div>
+    <h2 class="t2">Nem sempre o sinal grita. <span>Às vezes, ele está no detalhe.</span></h2>
+    <p class="intro">Volte ao alojamento com Marcos. Alguns detalhes mostram que algo está errado.</p>
+    <div class="instr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9 11V5a2 2 0 014 0v6m0-2a2 2 0 014 0v4a7 7 0 01-7 7h-1a6 6 0 01-5-3l-2-4a2 2 0 013-2l1 1"/></svg>Toque nos 6 pontos da cena para encontrar os sinais de alerta.</div>
+    <div class="hot-grid">
+      <div class="cena-hot" id="cenaHot"></div>
+      <div class="achados">
+        <h4>Sinais encontrados</h4>
+        <p class="contador"><b id="nAch">0</b> de 6</p>
+        <ol id="listaAch"><li class="vazio" style="background:none;padding:0">Nenhum sinal encontrado ainda.</li></ol>
+      </div>
+    </div>
+    <div class="leve"><div class="tarja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>Leve com você</div><p>Um sinal isolado já merece atenção. Vários juntos pedem ação imediata.</p></div>
+    <div class="seguir" id="seguir-sinais"><button class="btn" data-ir="s-lei">Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button></div>
+  </div>
+</section>
+
+<!-- 4 LEI: CARTAS + LIGAR -->
+<section class="sec branca" id="s-lei" data-passo="lei" data-nome="O que diz a lei">
+  <div class="tranca"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Conclua a etapa anterior para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">4</span>O que diz a lei</div>
+    <h2 class="t2">Não é preciso haver correntes. <span>Basta um dos quatro elementos.</span></h2>
+    <p class="intro">No Brasil, reduzir alguém a condição análoga à de escravo é crime (Código Penal, art. 149). A lei descreve quatro formas de praticar esse crime.</p>
+    <div class="instr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9 11V5a2 2 0 014 0v6m0-2a2 2 0 014 0v4a7 7 0 01-7 7h-1a6 6 0 01-5-3l-2-4a2 2 0 013-2l1 1"/></svg>Vire as 4 cartas para conhecer cada elemento.</div>
+    <div class="cartas" id="cartas"></div>
+    <div class="destaque"><b>A lei também pune</b> quem retém documentos ou objetos pessoais, mantém vigilância ostensiva ou cerceia o transporte para manter o trabalhador no local (art. 149, §1º).</div>
+    <p class="fonte">Definição de trabalho forçado: Convenção 29 da OIT (1930), art. 2º.</p>
+
+    <div id="blocoLigar" style="margin-top:56px">
+      <h3 class="t2" style="font-size:clamp(24px,3vw,32px)">Agora, ligue os pontos. <span>Cada sinal do caso tem um nome na lei.</span></h3>
+      <div class="instr" style="margin-top:18px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>Arraste cada sinal para o elemento da lei correspondente. No celular, toque no sinal e depois no elemento.</div>
+      <div class="dnd" id="dndLigar"></div>
+    </div>
+    <div class="seguir" id="seguir-lei"><button class="btn" data-ir="s-fatos">Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button></div>
+  </div>
+</section>
+
+<!-- 5 FATOS -->
+<section class="sec" id="s-fatos" data-passo="fatos" data-nome="Relate fatos">
+  <div class="tranca"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Conclua a etapa anterior para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">5</span>Como relatar</div>
+    <h2 class="t2">Você não precisa ter certeza. <span>Precisa relatar fatos.</span></h2>
+    <p class="intro">Marcos vai acionar o canal de denúncia. Um bom relato descreve o que foi visto e ouvido, onde e quando, sem suposições nem julgamentos, e protege quem falou com ele.</p>
+    <div class="instr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>Ajude Marcos a montar o relato: arraste cada frase para "Entra no relato" ou "Fica de fora".</div>
+    <div class="dnd" id="dndFatos"></div>
+    <div class="seguir" id="seguir-fatos"><button class="btn" data-ir="s-diligencia">Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button></div>
+  </div>
+</section>
+
+<!-- 6 DILIGÊNCIA -->
+<section class="sec branca" id="s-diligencia" data-passo="ordem" data-nome="Devida diligência">
+  <div class="tranca"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Conclua a etapa anterior para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">6</span>O papel da empresa</div>
+    <h2 class="t2">Prevenir é um processo. <span>E ele tem uma ordem.</span></h2>
+    <p class="intro">Pelos Princípios Orientadores da ONU sobre Empresas e Direitos Humanos, as empresas devem identificar, prevenir e responder a riscos aos direitos humanos em suas operações e em sua cadeia. É a chamada devida diligência.</p>
+    <div class="instr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Arraste os passos (ou use as setas) para colocá-los na ordem certa. Depois, clique em Verificar.</div>
+    <div class="ordem-wrap">
+      <div>
+        <ol class="ordem" id="ordem"></ol>
+        <div class="barra-acoes" style="margin-top:16px"><button class="btn" id="verOrdem">Verificar</button><div class="msg" id="msgOrdem"></div></div>
+      </div>
+      <aside class="ordem-aside">O <b>GRI 409</b> pede que as empresas relatem as operações e os fornecedores com risco significativo de trabalho forçado e as medidas adotadas para eliminá-lo.</aside>
+    </div>
+    <div class="seguir" id="seguir-ordem"><button class="btn" data-ir="s-quiz">Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button></div>
+  </div>
+</section>
+
+<!-- 7 QUIZ -->
+<section class="sec" id="s-quiz" data-passo="quiz" data-nome="Desafio final">
+  <div class="tranca"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Conclua a etapa anterior para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">7</span>Desafio final</div>
+    <h2 class="t2">Hora de mostrar o que você aprendeu. <span>4 questões.</span></h2>
+    <p class="intro">Responda às questões e envie. Você vê o gabarito comentado logo em seguida.</p>
+    <div class="quiz" id="quiz"></div>
+    <div class="barra-acoes" style="margin-top:18px"><button class="btn" id="enviarQuiz" disabled>Enviar respostas</button><span class="dica-toque" id="dicaQuiz">Responda às 4 questões para enviar.</span></div>
+    <div class="resultado" id="resultado" style="margin-top:18px"><div class="pz" id="pz">0/4</div><div><h3 style="font-size:22px;margin-bottom:6px" id="resTit"></h3><p id="resTx"></p><button class="btn claro" style="margin-top:14px" id="refazerQuiz">Refazer o desafio</button></div></div>
+    <div class="seguir" id="seguir-quiz"><button class="btn" data-ir="s-fim">Ver o encerramento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button></div>
+  </div>
+</section>
+
+<!-- 8 FIM -->
+<section class="sec escura" id="s-fim" data-passo="fim" data-nome="Para levar">
+  <div class="tranca"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Conclua a etapa anterior para liberar</div></div>
+  <div class="sec-in">
+    <div class="rot"><span class="num">8</span>Para levar</div>
+    <h2 class="t2">Cada pessoa é parte <span>da devida diligência.</span></h2>
+    <div class="fim-grid" style="margin-top:26px">
+      <div class="fim-card"><b>Olhe a cadeia</b>Trabalho análogo à escravidão pode acontecer em fornecedores, e não só dentro da empresa.</div>
+      <div class="fim-card"><b>Relate fatos</b>Você não precisa ter certeza para relatar. Descreva o que viu e proteja quem falou com você.</div>
+      <div class="fim-card"><b>Use o canal</b>Acione o canal de denúncia da empresa. A apuração cabe às áreas responsáveis.</div>
+    </div>
+    <h3 style="margin-top:40px;font-size:20px">Suas conquistas</h3>
+    <div class="vitrine" id="vitrine"></div>
+    <div class="barra-acoes"><button class="btn claro" id="recomecar">Recomeçar a pílula</button></div>
+    <div class="amostra"><b>[AMOSTRA] Fim da amostra</b>Esta pílula demonstra o formato proposto. No projeto, conteúdos, casos, canais e identidade visual serão definidos e validados com a CMOC.</div>
+  </div>
+</section>
+
+<footer class="rodape">Caso fictício, criado para fins educacionais. Pessoas, empresas e locais não existem.</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><div class="mdl" id="toastMdl"></div><div><small>Conquista desbloqueada</small><b id="toastTx"></b></div></div>
+<div class="confete" id="confete" aria-hidden="true"></div>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const C = {roxo:'#210456',roxo2:'#3A1A78',roxo3:'#5B3E99',verde:'#5C922D',verde2:'#477223',verde3:'#8DBF5A',ouro:'#F2B33D',pele1:'#C68863',pele2:'#8D5A3B',pele3:'#E0AC82'};
+const REVISAO = new URLSearchParams(location.search).has('revisao');
+const CHAVE = 'cmo01-m01-demo';
+let estado = {feitos:{}, med:{}};
+try { const s = JSON.parse(localStorage.getItem(CHAVE)); if (s && s.feitos) estado = s; } catch (e) {}
+const salvar = () => { try { localStorage.setItem(CHAVE, JSON.stringify(estado)); } catch (e) {} };
+
+/* ---------------- ícones ---------------- */
+const IC = {
+  lupa:`<svg viewBox="0 0 24 24" fill="none" stroke="${C.roxo}" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>`,
+  balanca:`<svg viewBox="0 0 24 24" fill="none" stroke="${C.roxo}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M5 7h14M12 5l-7 2M12 5l7 2"/><path d="M5 7l-3 7a3 3 0 006 0zM19 7l-3 7a3 3 0 006 0z"/></svg>`,
+  escudo:`<svg viewBox="0 0 24 24" fill="none" stroke="${C.roxo}" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke="${C.verde2}"/></svg>`,
+  corrente:`<svg viewBox="0 0 64 64" fill="none" stroke="${C.roxo}" stroke-width="6"><rect x="6" y="22" width="30" height="20" rx="10" transform="rotate(-30 21 32)"/><rect x="28" y="22" width="30" height="20" rx="10" transform="rotate(-30 43 32)"/></svg>`,
+  relogio:`<svg viewBox="0 0 64 64" fill="none" stroke="${C.roxo}" stroke-width="6" stroke-linecap="round"><circle cx="32" cy="34" r="22"/><path d="M32 34V20M32 34l11 6"/><path d="M24 6h16" stroke="${C.verde2}"/></svg>`,
+  casa:`<svg viewBox="0 0 64 64" fill="none" stroke="${C.roxo}" stroke-width="6" stroke-linejoin="round"><path d="M8 30L32 9l24 21M14 26v28h36V26"/><path d="M30 30l6 8-6 6 6 8" stroke="${C.verde2}" stroke-width="4"/></svg>`,
+  cadeado:`<svg viewBox="0 0 64 64"><path d="M20 28v-8a12 12 0 0124 0v8" fill="none" stroke="${C.roxo}" stroke-width="6"/><rect x="12" y="28" width="40" height="30" rx="7" fill="${C.roxo}"/><text x="32" y="51" font-family="Arial" font-weight="800" font-size="22" fill="#fff" text-anchor="middle">R$</text></svg>`,
+  doc:`<svg viewBox="0 0 24 24" fill="none" stroke="${C.roxo}" stroke-width="2" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>`,
+  lixo:`<svg viewBox="0 0 24 24" fill="none" stroke="${C.roxo}" stroke-width="2" stroke-linecap="round"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/></svg>`,
+  toque:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v4M4 12h4M16 12h4M12 16v4"/></svg>`
+};
+$$('[data-ic]').forEach(e => e.innerHTML = IC[e.dataset.ic] || '');
+const medalhaSVG = (cor = C.ouro) => `<svg viewBox="0 0 56 56"><path d="M16 2h9l3 14-9 3zM40 2h-9l-3 14 9 3z" fill="${C.verde3}"/><path d="M16 2h9l3 14-9 3z" fill="${C.verde2}" opacity=".5"/><circle cx="28" cy="34" r="19" fill="${cor}"/><circle cx="28" cy="34" r="14" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><path d="M28 23.5l3.2 6.5 7.1 1-5.2 5 1.2 7-6.3-3.3-6.3 3.3 1.2-7-5.2-5 7.1-1z" fill="#fff"/></svg>`;
+
+/* ---------------- ilustrações (SVG em código) ---------------- */
+function pessoa(x, base, s, o) {
+  const pele = o.pele || C.pele1, camisa = o.camisa || C.roxo3, calca = o.calca || '#2B2F3A';
+  const boca = o.triste ? `<path d="M-12 -326 Q0 -338 12 -326" stroke="#222" stroke-width="4" fill="none" stroke-linecap="round"/>`
+    : o.bravo ? `<path d="M-12 -330 H12" stroke="#222" stroke-width="4" stroke-linecap="round"/><path d="M-22 -376 l14 6 M22 -376 l-14 6" stroke="#222" stroke-width="4" stroke-linecap="round"/>`
+    : `<path d="M-12 -340 Q0 -328 12 -340" stroke="#222" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  return `<g transform="translate(${x} ${base}) scale(${s})" class="${o.cls || ''}">
+    <rect x="-34" y="-150" width="28" height="150" rx="10" fill="${calca}"/><rect x="6" y="-150" width="28" height="150" rx="10" fill="${calca}"/>
+    <rect x="-40" y="-12" width="40" height="14" rx="6" fill="#1E1E24"/><rect x="2" y="-12" width="40" height="14" rx="6" fill="#1E1E24"/>
+    <rect x="-50" y="-300" width="100" height="165" rx="30" fill="${camisa}"/>
+    ${o.colete ? `<rect x="-50" y="-250" width="100" height="14" fill="${o.colete}"/><rect x="-50" y="-200" width="100" height="14" fill="${o.colete}"/>` : ''}
+    ${o.bracos === 'cruzados' ? `<rect x="-58" y="-235" width="116" height="34" rx="17" fill="${camisa}" stroke="rgba(0,0,0,.15)" stroke-width="3"/>`
+      : `<rect x="-72" y="-290" width="26" height="130" rx="13" fill="${camisa}"/><rect x="46" y="-290" width="26" height="130" rx="13" fill="${camisa}"/><circle cx="-59" cy="-158" r="13" fill="${pele}"/><circle cx="59" cy="-158" r="13" fill="${pele}"/>`}
+    <rect x="-12" y="-322" width="24" height="30" fill="${pele}"/><ellipse cx="0" cy="-360" rx="40" ry="46" fill="${pele}"/>
+    ${o.cabelo ? `<path d="M-42 -372 A42 30 0 0 1 42 -372 Z" fill="${o.cabelo}"/>` : ''}
+    ${o.capacete ? `<path d="M-48 -380 A48 36 0 0 1 48 -380 Z" fill="${o.capacete}"/><rect x="-56" y="-386" width="112" height="10" rx="4" fill="${o.capacete}"/>` : ''}
+    <circle cx="-14" cy="-360" r="4.5" fill="#222"/><circle cx="14" cy="-360" r="4.5" fill="#222"/>${boca}
+    ${o.prancheta ? `<rect x="40" y="-250" width="56" height="74" rx="6" fill="#7A5230"/><rect x="46" y="-240" width="44" height="60" rx="4" fill="#fff"/><path d="M52 -228h32M52 -216h32M52 -204h22" stroke="#bbb" stroke-width="4"/>` : ''}
+    ${o.celular ? `<rect x="44" y="-196" width="26" height="44" rx="5" fill="#222"/><rect x="48" y="-191" width="18" height="32" rx="2" fill="${C.verde3}"/>` : ''}
+    ${o.mochila ? `<rect x="-86" y="-270" width="42" height="80" rx="12" fill="#6B5A44"/>` : ''}
+  </g>`;
+}
+const caminhao = (x, y, s, cls = '') => `<g transform="translate(${x} ${y}) scale(${s})"><g class="${cls}">
+  <path d="M0 0H170L190-70H-10Z" fill="${C.ouro}"/><rect x="170" y="-60" width="70" height="60" rx="8" fill="#E09E2A"/><rect x="190" y="-50" width="36" height="24" rx="4" fill="#9FC3D9"/>
+  <rect x="0" y="0" width="240" height="18" fill="#2B2B2B"/><circle cx="40" cy="26" r="30" fill="#222"/><circle cx="40" cy="26" r="11" fill="#777"/><circle cx="190" cy="26" r="30" fill="#222"/><circle cx="190" cy="26" r="11" fill="#777"/></g></g>`;
+const svg = (inner, vb = '0 0 1000 560', extra = '') => `<svg viewBox="${vb}" role="img" ${extra} xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
+
+const marcos = (x, base, s, cls) => pessoa(x, base, s, {pele:C.pele1, camisa:C.roxo3, capacete:'#fff', colete:C.ouro, cabelo:'#2a1a12', prancheta:true, cls});
+
+function cenaCapa() {
+  const bancos = ['#E2B577','#C98B3E','#B07332','#8E5A26','#6E431B'];
+  let b = '';
+  bancos.forEach((c, i) => { const t = 470 + i * 80, n = 60 + i * 70; b += `<path d="M${n} ${t}H${1000-n}L${950-n} ${t+80}H${n+50}Z" fill="${c}"/><rect x="${n+10}" y="${t}" width="${1000-2*n-20}" height="8" fill="rgba(0,0,0,.12)"/>`; });
+  return svg(`<defs><clipPath id="cc"><circle cx="500" cy="500" r="480"/></clipPath><linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B3E99"/><stop offset=".55" stop-color="#8E74C4"/></linearGradient></defs>
+    <g clip-path="url(#cc)"><rect width="1000" height="1000" fill="url(#ceu)"/><circle cx="720" cy="250" r="80" fill="${C.ouro}" class="pisca" opacity=".95"/>
+    <path d="M0 470C200 380 380 420 520 400S850 430 1000 400V1000H0Z" fill="${C.verde2}"/>${b}<rect y="870" width="1000" height="200" fill="#5A3612"/>
+    ${caminhao(540, 535, 1.1, 'caminhao')}</g><circle cx="500" cy="500" r="480" fill="none" stroke="#fff" stroke-width="16"/>`, '0 0 1000 1000', 'aria-label="Ilustração de uma mina a céu aberto com um caminhão"');
+}
+function cenaVisita() {
+  return svg(`<rect width="1000" height="560" fill="#E7DFF4"/><circle cx="850" cy="110" r="58" fill="${C.ouro}" opacity=".9"/>
+   <path d="M0 330C300 270 600 330 1000 280V560H0Z" fill="${C.verde3}"/><rect y="410" width="1000" height="150" fill="#E2B577"/><rect y="410" width="1000" height="12" fill="#C98B3E"/>
+   <rect x="120" y="230" width="14" height="190" fill="#6B6B6B"/><rect x="300" y="230" width="14" height="190" fill="#6B6B6B"/><rect x="95" y="150" width="245" height="130" rx="12" fill="${C.verde2}"/><rect x="112" y="166" width="211" height="98" rx="8" fill="#fff"/><rect x="130" y="182" width="120" height="14" fill="${C.roxo}"/><rect x="130" y="210" width="170" height="9" fill="#BDB3CF"/><rect x="130" y="228" width="140" height="9" fill="#BDB3CF"/><rect x="130" y="246" width="110" height="9" fill="#BDB3CF"/>
+   <path d="M420 425l18-60 18 60z" fill="#F07D2B"/><path d="M480 425l18-60 18 60z" fill="#F07D2B"/>
+   <rect x="560" y="440" width="260" height="58" rx="29" fill="#9AA3AD"/><ellipse cx="560" cy="469" rx="20" ry="29" fill="#7B848E"/>
+   ${caminhao(640, 395, .75, 'caminhao')}${marcos(330, 540, .6, 'anda')}`, '0 0 1000 560', 'aria-label="Marcos chega à frente de obra da terceirizada"');
+}
+function alojamento(comHot) {
+  return `<rect width="1000" height="560" fill="#D9CDEB"/>${[...Array(12)].map((_, i) => `<rect x="${i*90}" y="0" width="6" height="380" fill="#BFAFD6"/>`).join('')}
+   <rect y="380" width="1000" height="180" fill="#A88F6A"/>${[...Array(9)].map((_, i) => `<rect x="${i*120}" y="380" width="4" height="180" fill="#937A56"/>`).join('')}
+   <line x1="500" y1="0" x2="500" y2="70" stroke="#555" stroke-width="3"/><g class="balanca"><line x1="500" y1="0" x2="500" y2="70" stroke="transparent"/><circle cx="500" cy="84" r="16" fill="#FFE8A3"/></g>
+   <rect x="90" y="80" width="150" height="110" rx="8" fill="#fff"/><rect x="100" y="90" width="130" height="90" rx="4" fill="#9FC3D9"/><line x1="165" y1="90" x2="165" y2="180" stroke="#fff" stroke-width="6"/>
+   <circle cx="370" cy="150" r="48" fill="#fff" stroke="${C.roxo}" stroke-width="6"/><line x1="370" y1="150" x2="370" y2="118" stroke="${C.roxo}" stroke-width="6" stroke-linecap="round"/><g class="ponteiro"><line x1="370" y1="150" x2="396" y2="162" stroke="${C.roxo}" stroke-width="5" stroke-linecap="round"/></g>
+   <rect x="520" y="170" width="140" height="12" rx="3" fill="#8B6B4A"/><rect x="530" y="128" width="26" height="42" rx="3" fill="#1F4E8C"/><rect x="558" y="132" width="26" height="38" rx="3" fill="#1F4E8C"/><rect x="586" y="126" width="26" height="44" rx="3" fill="#163B6B"/><g transform="translate(628 138)"><path d="M0 12v-6a9 9 0 0118 0v6" fill="none" stroke="${C.roxo}" stroke-width="4"/><rect x="-4" y="12" width="26" height="20" rx="4" fill="${C.roxo}"/></g>
+   <rect x="700" y="150" width="120" height="230" rx="6" fill="#8B6B4A"/><circle cx="805" cy="270" r="7" fill="#E6C36A"/><rect x="735" y="170" width="50" height="22" rx="4" fill="#fff" opacity=".85"/><path d="M748 176h24M748 184h16" stroke="#8B6B4A" stroke-width="3"/>
+   <path d="M830 300h60l-6-18h-48z" fill="#7FA8C2"/><rect x="830" y="300" width="60" height="90" rx="16" fill="rgba(159,195,217,.9)"/><rect x="895" y="300" width="60" height="90" rx="16" fill="rgba(159,195,217,.9)"/><rect x="850" y="285" width="20" height="18" fill="#7FA8C2"/><rect x="915" y="285" width="20" height="18" fill="#7FA8C2"/>
+   <rect x="240" y="330" width="150" height="10" rx="3" fill="#6E5536"/><rect x="250" y="340" width="10" height="60" fill="#6E5536"/><rect x="370" y="340" width="10" height="60" fill="#6E5536"/><g transform="translate(272 300) rotate(-6)"><rect width="88" height="34" rx="4" fill="#F4E9C8"/><path d="M8 10h50M8 18h60M8 26h40" stroke="#B49A64" stroke-width="3"/><text x="74" y="25" font-family="Arial" font-weight="800" font-size="14" fill="${C.roxo}">R$</text></g>
+   ${[[40,450],[320,480],[600,450]].map(([x, y]) => `<rect x="${x}" y="${y}" width="240" height="62" rx="14" fill="#5C6F8A"/><rect x="${x}" y="${y}" width="240" height="20" rx="10" fill="#7D90AB"/><rect x="${x+14}" y="${y-14}" width="70" height="30" rx="12" fill="#E9E4D8"/>`).join('')}`;
+}
+function cenaAlojamento() { return svg(alojamento() + marcos(940, 560, .5, 'anda'), '0 0 1000 560', 'aria-label="Alojamento da terceirizada"'); }
+function cenaConversa() {
+  return svg(`<rect width="1000" height="560" fill="#E7DFF4"/><rect y="400" width="1000" height="160" fill="#A88F6A"/>
+   ${pessoa(330, 545, .72, {pele:C.pele2, camisa:'#7B8794', calca:'#3A3F4B', cabelo:'#1a1a1a', triste:true})}
+   ${marcos(640, 545, .72)}
+   <g class="surge"><rect x="80" y="40" width="300" height="110" rx="28" fill="#fff"/><path d="M230 148l20 50 22-50z" fill="#fff"/><circle cx="195" cy="95" r="9" fill="${C.roxo}"/><circle cx="230" cy="95" r="9" fill="${C.roxo}"/><circle cx="265" cy="95" r="9" fill="${C.roxo}"/></g>
+   <g class="surge"><rect x="760" y="60" width="150" height="190" rx="12" fill="#1F4E8C"/><rect x="760" y="60" width="18" height="190" fill="#163B6B"/><circle cx="843" cy="120" r="22" fill="#E6C36A"/><rect x="800" y="170" width="90" height="10" fill="rgba(255,255,255,.5)"/><rect x="800" y="190" width="70" height="10" fill="rgba(255,255,255,.5)"/><path d="M877 235v-12a28 28 0 0156 0v12" fill="none" stroke="${C.roxo}" stroke-width="12"/><rect x="868" y="232" width="74" height="62" rx="10" fill="${C.roxo}"/><circle cx="905" cy="258" r="9" fill="#fff"/></g>`, '0 0 1000 560', 'aria-label="Um trabalhador conversa com Marcos"');
+}
+function cenaA() {
+  return svg(`<rect width="1000" height="560" fill="#CFC7DD"/><rect y="400" width="1000" height="160" fill="#9C8A70"/>
+   ${pessoa(220, 545, .62, {pele:C.pele2, camisa:'#7B8794', triste:true, cabelo:'#1a1a1a'})}${pessoa(360, 545, .62, {pele:C.pele3, camisa:'#6E7A86', triste:true, cabelo:'#4a3020'})}
+   <g class="sai">${marcos(620, 545, .62)}</g><text x="720" y="90" text-anchor="middle" font-family="Sora,Arial" font-weight="700" font-size="34" fill="${C.roxo}" opacity=".85">Semanas depois…</text>`, '0 0 1000 560', 'aria-label="Marcos vai embora e os trabalhadores continuam no alojamento"');
+}
+function cenaB() {
+  return svg(`<rect width="1000" height="560" fill="#E7DFF4"/><rect y="400" width="1000" height="160" fill="#A88F6A"/>
+   ${marcos(300, 545, .72)}${pessoa(600, 545, .72, {pele:C.pele3, camisa:'#3A3F4B', bravo:true, bracos:'cruzados', cabelo:'#222'})}
+   <g opacity=".7">${pessoa(860, 545, .5, {pele:C.pele2, camisa:'#7B8794', triste:true, cabelo:'#1a1a1a'})}</g>
+   <g class="surge"><rect x="560" y="70" width="160" height="90" rx="24" fill="#fff"/><path d="M620 158l14 40 18-40z" fill="#fff"/><text x="640" y="135" text-anchor="middle" font-family="Arial" font-weight="900" font-size="54" fill="#9A3412">!</text></g>`, '0 0 1000 560', 'aria-label="O encarregado reage com hostilidade e o trabalhador fica com medo"');
+}
+function cenaC() {
+  return svg(`<rect width="1000" height="560" fill="#E7DFF4"/><rect y="400" width="1000" height="160" fill="#BFAFD6"/>
+   <rect x="380" y="330" width="420" height="16" rx="4" fill="#8B6B4A"/><rect x="400" y="346" width="14" height="120" fill="#8B6B4A"/><rect x="766" y="346" width="14" height="120" fill="#8B6B4A"/>
+   <rect x="520" y="200" width="220" height="130" rx="10" fill="#2B2F3A"/><rect x="532" y="212" width="196" height="106" rx="6" fill="#fff"/>
+   <g class="surge"><path d="M630 228l30 11v20c0 18-12 28-30 32-18-4-30-14-30-32v-20z" fill="${C.roxo}"/><path d="M617 262l9 9 17-18" stroke="${C.verde3}" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+   ${pessoa(300, 545, .72, {pele:C.pele1, camisa:C.roxo3, cabelo:'#2a1a12', celular:true})}
+   <g class="surge"><rect x="80" y="60" width="270" height="120" rx="20" fill="#fff"/><path d="M110 98h150M110 122h190M110 146h120" stroke="#BDB3CF" stroke-width="10" stroke-linecap="round"/></g>`, '0 0 1000 560', 'aria-label="Marcos registra os fatos e aciona o canal de denúncia"');
+}
+function cenaD() {
+  return svg(`<rect width="1000" height="560" fill="#D9D2E4"/><circle cx="860" cy="100" r="50" fill="${C.ouro}" opacity=".6"/><rect y="400" width="1000" height="160" fill="#C9B48E"/>
+   ${pessoa(200, 545, .58, {pele:C.pele2, camisa:'#7B8794', triste:true, mochila:true, cabelo:'#1a1a1a'})}${pessoa(330, 545, .58, {pele:C.pele3, camisa:'#6E7A86', triste:true, mochila:true, cabelo:'#4a3020'})}${pessoa(460, 545, .58, {pele:C.pele1, camisa:'#8A7F96', triste:true, mochila:true, cabelo:'#222'})}
+   ${caminhao(650, 420, .7, 'sai')}`, '0 0 1000 560', 'aria-label="Os trabalhadores ficam do lado de fora, sem alojamento"');
+}
+
+$('#iluCapa').innerHTML = cenaCapa();
+
+/* ---------------- progresso e conquistas ---------------- */
+const PASSOS = ['video','sinais','lei','fatos','ordem','quiz'];
+const MEDALHAS = {
+  inicio:'Caso iniciado', decisao:'Decisão responsável', olhar:'Olhar atento', lei:'Conhece a lei',
+  ligar:'Ligou os pontos', fatos:'Só os fatos', ordem:'Diligência em ordem', fim:'Pílula concluída'
+};
+$('#tMed').textContent = Object.keys(MEDALHAS).length;
+const secoes = $$('.sec[data-nome]');
+const trilha = $('#trilha');
+secoes.forEach(s => { const a = document.createElement('a'); a.href = '#' + s.id; a.innerHTML = `<span>${s.dataset.nome}</span>`; a.setAttribute('aria-label', s.dataset.nome); trilha.appendChild(a); });
+
+function atualiza() {
+  const n = PASSOS.filter(p => estado.feitos[p]).length;
+  const pct = Math.round(n / PASSOS.length * 100);
+  $('#pct').textContent = pct + '%'; $('#barra').style.width = pct + '%';
+  $('#nMed').textContent = Object.keys(estado.med).length;
+  // desbloqueio sequencial
+  let liberado = true;
+  secoes.forEach(s => {
+    const p = s.dataset.passo;
+    if (p) {
+      const idx = PASSOS.indexOf(p);
+      const anterior = idx <= 0 ? true : !!estado.feitos[PASSOS[idx - 1]];
+      const ok = REVISAO || (p === 'video' ? true : p === 'fim' ? !!estado.feitos.quiz : anterior);
+      s.classList.toggle('trancada', !ok);
+      const seg = $('#seguir-' + p); if (seg) seg.classList.toggle('on', !!estado.feitos[p]);
+    }
+  });
+  $$('a', trilha).forEach((a, i) => {
+    const s = secoes[i]; a.classList.toggle('trancado', s.classList.contains('trancada'));
+    a.classList.toggle('feito', !!(s.dataset.passo && estado.feitos[s.dataset.passo]));
+  });
+  vitrine();
+}
+function concluir(p) { if (estado.feitos[p]) return; estado.feitos[p] = true; salvar(); atualiza(); }
+const fila = []; let mostrando = false;
+function conquista(id) {
+  if (estado.med[id]) return; estado.med[id] = true; salvar(); atualiza(); fila.push(MEDALHAS[id]); if (!mostrando) proxToast();
+}
+function proxToast() {
+  const t = fila.shift(); if (!t) { mostrando = false; return; }
+  mostrando = true; $('#toastMdl').innerHTML = medalhaSVG(); $('#toastTx').textContent = t;
+  $('#toast').classList.add('on'); confete();
+  setTimeout(() => { $('#toast').classList.remove('on'); setTimeout(proxToast, 450); }, 2600);
+}
+function confete() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const box = $('#confete'); const cores = [C.verde3, C.ouro, C.roxo3, '#fff', C.verde];
+  for (let i = 0; i < 26; i++) { const e = document.createElement('i'); e.style.left = Math.random() * 100 + 'vw'; e.style.background = cores[i % cores.length]; e.style.animationDelay = Math.random() * .4 + 's'; box.appendChild(e); setTimeout(() => e.remove(), 2400); }
+}
+function vitrine() { $('#vitrine').innerHTML = Object.entries(MEDALHAS).map(([k, v]) => `<div class="med ${estado.med[k] ? 'ganha' : ''}">${medalhaSVG(estado.med[k] ? C.ouro : '#9A93AB')}${v}</div>`).join(''); }
+
+// trilha: seção atual
+const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const i = secoes.indexOf(e.target); $$('a', trilha).forEach((a, j) => a.classList.toggle('atual', i === j)); } }), {rootMargin:'-45% 0px -50% 0px'});
+secoes.forEach(s => obs.observe(s));
+document.addEventListener('click', e => { const b = e.target.closest('[data-ir]'); if (b) document.getElementById(b.dataset.ir).scrollIntoView({behavior:'smooth'}); });
+$('#comecar').addEventListener('click', () => { $('#s-missao').scrollIntoView({behavior:'smooth'}); });
+
+/* ---------------- vídeo com decisão ---------------- */
+const ROTEIRO = [
+  {cap:'Cena 1 · A visita', cena:cenaVisita, dur:7, leg:'Marcos é fiscal de contratos em uma unidade de mineração. Numa segunda-feira, ele vai até a frente de obra de uma empresa terceirizada.'},
+  {cap:'Cena 1 · A visita', cena:null, dur:5, leg:'A terceirizada foi contratada para a manutenção de acessos e drenagem.'},
+  {cap:'Cena 2 · O alojamento', cena:cenaAlojamento, dur:7, leg:'Ao fim da visita, Marcos passa pelo alojamento. Vê colchões no chão, um único banheiro para muitos trabalhadores e galões de água sem identificação.'},
+  {cap:'Cena 2 · O alojamento', cena:null, dur:5, leg:'Um trabalhador comenta que o turno começa às 5h e termina depois das 20h.'},
+  {cap:'Cena 3 · A conversa', cena:cenaConversa, dur:7, leg:'Outro trabalhador diz, em voz baixa, que o encarregado guarda as carteiras de trabalho "para não perder".'},
+  {cap:'Cena 3 · A conversa', cena:null, dur:6, leg:'"Todos devem para a cantina da empresa, que desconta tudo do salário. Ninguém sai daqui antes de acertar."'}
+];
+const OPS = [
+  {l:'A', t:'Não se envolver. Os trabalhadores são empregados da terceirizada, e não da empresa.', ok:false, cena:cenaA,
+   leg:'Marcos vai embora. Semanas depois, os trabalhadores continuam no mesmo alojamento.',
+   tit:'Não é o melhor caminho.', fb:'A responsabilidade de respeitar os direitos humanos alcança a cadeia de fornecedores. Ignorar os sinais expõe pessoas a violações graves e a empresa a riscos legais e de reputação.'},
+  {l:'B', t:'Confrontar o encarregado na hora e exigir a devolução das carteiras.', ok:false, cena:cenaB,
+   leg:'O encarregado nega tudo e encerra a conversa. Os trabalhadores ficam com medo de represália.',
+   tit:'Atenção.', fb:'A intenção é boa, mas o confronto pode colocar os trabalhadores em risco de represália e prejudicar a apuração. O caminho é registrar e acionar quem tem atribuição para agir.'},
+  {l:'C', t:'Registrar o que viu e ouviu, sem expor os trabalhadores, e acionar o canal de denúncia e a área responsável pelo contrato.', ok:true, cena:cenaC,
+   leg:'Marcos anota fatos, local e horário, protege quem falou com ele e aciona o canal de denúncia.',
+   tit:'Esse é o caminho.', fb:'Marcos não precisa ter certeza para relatar. Ele descreve fatos (o que viu, onde, quando) e protege quem falou com ele. A apuração e as medidas cabem às áreas responsáveis e, quando for o caso, às autoridades.'},
+  {l:'D', t:'Suspender o contrato por conta própria e mandar todos embora do alojamento.', ok:false, cena:cenaD,
+   leg:'Sem apuração, os trabalhadores saem do alojamento sem ter para onde ir.',
+   tit:'Atenção.', fb:'Decisões sobre o contrato não cabem a uma pessoa sozinha. Encerrar tudo sem apuração pode deixar os trabalhadores desamparados. A resposta deve ser estruturada e priorizar as pessoas afetadas.'}
+];
+const palco = $('#palco'); const TOTAL = ROTEIRO.reduce((a, r) => a + r.dur, 0);
+let vi = 0, vt = 0, tocando = false, tick = null, cenaAtual = null;
+const vistas = new Set();
+// linha do tempo com marcas
+let acc = 0; ROTEIRO.forEach((r, i) => { if (i && r.cena) { const m = document.createElement('span'); m.className = 'marca'; m.style.left = (acc / TOTAL * 100) + '%'; $('#linhaTempo').appendChild(m); } acc += r.dur; });
+const md = document.createElement('span'); md.className = 'marca dec'; md.style.left = '100%'; md.title = 'Decisão'; $('#linhaTempo').appendChild(md);
+function mostraCena(fn) {
+  const d = document.createElement('div'); d.className = 'cena'; d.innerHTML = fn(); palco.insertBefore(d, $('#capitulo'));
+  requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('on')));
+  if (cenaAtual) { const velha = cenaAtual; velha.classList.remove('on'); setTimeout(() => velha.remove(), 800); }
+  cenaAtual = d;
+}
+function irPara(i) {
+  vi = i; const r = ROTEIRO[i];
+  if (r.cena) mostraCena(r.cena);
+  else if (!cenaAtual) { let j = i; while (j > 0 && !ROTEIRO[j].cena) j--; mostraCena(ROTEIRO[j].cena); }
+  $('#capitulo').textContent = r.cap; $('#legenda').textContent = r.leg;
+}
+const fmt = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+function play() {
+  $('#inicioVideo').style.display = 'none'; tocando = true; setPlayIcon();
+  conquista('inicio');
+  clearInterval(tick); tick = setInterval(() => {
+    vt += .1; let soma = 0, alvo = 0;
+    for (let i = 0; i < ROTEIRO.length; i++) { soma += ROTEIRO[i].dur; if (vt < soma) { alvo = i; break; } alvo = i + 1; }
+    if (alvo >= ROTEIRO.length) { vt = TOTAL; pausa(); abreDecisao(); }
+    else if (alvo !== vi) irPara(alvo);
+    $('#progVideo').style.width = (vt / TOTAL * 100) + '%'; $('#tempo').textContent = fmt(vt);
+  }, 100);
+}
+function pausa() { tocando = false; clearInterval(tick); setPlayIcon(); }
+function setPlayIcon() {
+  $('#vPlay').innerHTML = tocando ? '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>';
+  $('#vPlay').setAttribute('aria-label', tocando ? 'Pausar' : 'Reproduzir');
+}
+function reinicia() { pausa(); fecha(); vt = 0; cenaAtual && cenaAtual.remove(); cenaAtual = null; irPara(0); $('#progVideo').style.width = '0'; $('#tempo').textContent = '0:00'; play(); }
+function fecha() { $('#decisao').classList.remove('on'); $('#retorno').classList.remove('on'); palco.classList.remove('dec', 'ret'); }
+function abreDecisao() {
+  $('#legenda').textContent = ''; $('#capitulo').textContent = 'Momento de decisão';
+  $('#ops').innerHTML = OPS.map((o, i) => `<button class="op ${vistas.has(i) ? 'vista' : ''}" data-op="${i}"><b>${o.l}</b><span>${o.t}</span></button>`).join('');
+  palco.classList.remove('ret'); palco.classList.add('dec');
+  $('#decisao').classList.add('on'); setTimeout(() => $('#ops .op')?.focus({preventScroll:true}), 100);
+}
+$('#ops').addEventListener('click', e => {
+  const b = e.target.closest('[data-op]'); if (!b) return;
+  const o = OPS[+b.dataset.op]; vistas.add(+b.dataset.op);
+  $('#decisao').classList.remove('on'); palco.classList.remove('dec'); mostraCena(o.cena);
+  $('#capitulo').textContent = 'Consequência · opção ' + o.l; $('#legenda').textContent = o.leg;
+  setTimeout(() => {
+    $('#retornoCard').className = 'card ' + (o.ok ? 'ok' : 'nao');
+    $('#retornoCard').innerHTML = `<h4>${o.tit}</h4><p>${o.fb}</p><div class="acoes">${o.ok ? '<button class="btn" data-v="seguir">Continuar</button><button class="btn contorno" data-v="voltar">Ver outras opções</button>' : '<button class="btn" data-v="voltar">Voltar à decisão</button>'}</div>`;
+    palco.classList.add('ret'); $('#retorno').classList.add('on'); $('#legenda').textContent = ''; $('#retornoCard .btn').focus({preventScroll:true});
+    if (o.ok) { conquista('decisao'); concluir('video'); }
+  }, 4200);
+});
+$('#retorno').addEventListener('click', e => {
+  const v = e.target.closest('[data-v]'); if (!v) return;
+  $('#retorno').classList.remove('on'); palco.classList.remove('ret');
+  if (v.dataset.v === 'voltar') { mostraCena(cenaConversa); abreDecisao(); }
+  else { document.getElementById('s-sinais').scrollIntoView({behavior:'smooth'}); }
+});
+$('#inicioVideo button').addEventListener('click', () => { irPara(0); play(); });
+$('#vPlay').addEventListener('click', () => { if ($('#decisao').classList.contains('on') || $('#retorno').classList.contains('on')) return; if ($('#inicioVideo').style.display !== 'none') { irPara(0); play(); return; } tocando ? pausa() : (vt >= TOTAL ? abreDecisao() : play()); });
+$('#vReinicio').addEventListener('click', reinicia);
+if (REVISAO) {
+  const pula = document.createElement('button'); pula.setAttribute('aria-label', 'Pular para a decisão'); pula.title = 'Pular para a decisão (revisão)';
+  pula.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5l9 7-9 7zM15 5h3v14h-3z"/></svg>';
+  $('#vReinicio').after(pula);
+  pula.addEventListener('click', () => { if ($('#inicioVideo').style.display !== 'none') irPara(0); fecha(); vt = TOTAL - .2; play(); });
+}
+
+/* ---------------- hotspots ---------------- */
+const HOTS = [
+  {x:16, y:86, t:'Colchões no chão', d:'Não há camas: os trabalhadores dormem em colchões direto no chão.', tag:'Condições degradantes'},
+  {x:76, y:47, t:'Um único banheiro', d:'Um só banheiro para muitos trabalhadores.', tag:'Condições degradantes'},
+  {x:89, y:61, t:'Água sem identificação', d:'Galões sem identificação: não há garantia de água potável.', tag:'Condições degradantes'},
+  {x:37, y:27, t:'Turno das 5h às 20h', d:'O turno começa às 5h e termina depois das 20h.', tag:'Jornada exaustiva'},
+  {x:58, y:27, t:'Carteiras guardadas', d:'O encarregado guarda as carteiras de trabalho "para não perder".', tag:'Retenção de documentos'},
+  {x:32, y:57, t:'Caderno da cantina', d:'Todos devem para a cantina, que desconta do salário. "Ninguém sai daqui antes de acertar."', tag:'Servidão por dívida'}
+];
+const achados = new Set(estado.achados || []);
+$('#cenaHot').innerHTML = svg(alojamento(), '0 0 1000 560', 'aria-label="Alojamento da terceirizada. Use os botões numerados para explorar."') + HOTS.map((h, i) => `<button class="hot" style="left:${h.x}%;top:${h.y}%" data-h="${i}" aria-label="Ponto ${i + 1}">${i + 1}</button>`).join('');
+function renderAchados() {
+  $$('.hot').forEach(b => b.classList.toggle('achado', achados.has(+b.dataset.h)));
+  $('#nAch').textContent = achados.size;
+  $('#listaAch').innerHTML = achados.size ? [...achados].map(i => `<li><b>${HOTS[i].t}</b>${HOTS[i].d}<br><span class="tag">${HOTS[i].tag}</span></li>`).join('') : '<li class="vazio" style="background:none;padding:0">Nenhum sinal encontrado ainda.</li>';
+}
+$('#cenaHot').addEventListener('click', e => {
+  const b = e.target.closest('.hot'); if (!b) return; achados.add(+b.dataset.h); estado.achados = [...achados]; salvar(); renderAchados();
+  if (achados.size === HOTS.length) { conquista('olhar'); concluir('sinais'); }
+});
+renderAchados();
+
+/* ---------------- cartas ---------------- */
+const CARTAS = [
+  ['corrente','Trabalho forçado','Trabalho exigido sob ameaça de punição, para o qual a pessoa não se ofereceu por vontade própria.'],
+  ['relogio','Jornada exaustiva','Jornada que, pela duração ou intensidade, leva a pessoa ao esgotamento e coloca em risco sua saúde e segurança.'],
+  ['casa','Condições degradantes','Alojamento, alimentação, água ou higiene que negam a dignidade da pessoa trabalhadora.'],
+  ['cadeado','Servidão por dívida','Restringir a saída do trabalhador por causa de dívida com o empregador ou com quem o representa.']
+];
+const viradas = new Set();
+$('#cartas').innerHTML = CARTAS.map(([ic, t, d], i) => `<button class="carta" data-c="${i}" aria-label="${t}. Toque para virar."><div class="in"><div class="f"><div class="circ">${IC[ic]}</div><h4>${t}</h4><small>Toque para virar</small></div><div class="v"><h4>${t}</h4><p>${d}</p></div></div></button>`).join('');
+$('#cartas').addEventListener('click', e => { const c = e.target.closest('.carta'); if (!c) return; c.classList.toggle('virada'); viradas.add(+c.dataset.c); if (viradas.size === 4) conquista('lei'); });
+
+/* ---------------- arrastar e soltar (genérico) ---------------- */
+function arrastar(cont, cfg) {
+  const banco = document.createElement('div'); banco.className = 'banco'; banco.setAttribute('aria-label', 'Itens para posicionar');
+  const zonas = document.createElement('div'); zonas.className = 'zonas ' + (cfg.zonas.length === 4 ? 'z4' : 'z2');
+  zonas.innerHTML = cfg.zonas.map(z => `<div class="zona" data-z="${z.id}" tabindex="0" role="group" aria-label="${z.t}"><h4>${z.ic ? IC[z.ic] : ''}${z.t}</h4></div>`).join('');
+  const acoes = document.createElement('div'); acoes.className = 'barra-acoes';
+  acoes.innerHTML = `<button class="btn" disabled>Verificar</button><span class="dica-toque">Posicione todos os itens para verificar.</span>`;
+  const msg = document.createElement('div'); msg.className = 'msg';
+  cont.append(banco, zonas, acoes, msg);
+  const embaralha = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(v => v[1]);
+  embaralha(cfg.itens).forEach(it => { const c = document.createElement('div'); c.className = 'chip'; c.tabIndex = 0; c.setAttribute('role', 'button'); c.dataset.z = it.z; c.textContent = it.t; banco.appendChild(c); });
+  const btn = $('.btn', acoes), dica = $('.dica-toque', acoes);
+  let sel = null, fant = null, arr = null, ox = 0, oy = 0, moveu = false, sx = 0, sy = 0;
+  const pronto = () => { const n = banco.children.length; btn.disabled = n > 0; dica.textContent = n ? `Faltam ${n} ${n > 1 ? 'itens' : 'item'} para posicionar.` : 'Tudo posicionado. Clique em Verificar.'; };
+  const solta = (chip, alvo) => { if (!alvo || chip.classList.contains('certo')) return; chip.classList.remove('errado', 'sel'); alvo.appendChild(chip); pronto(); msg.className = 'msg'; };
+  const selec = c => { $$('.chip.sel', cont).forEach(x => x.classList.remove('sel')); sel = c; if (c) c.classList.add('sel'); $$('.zona', cont).forEach(z => z.classList.toggle('alvo-tap', !!c)); };
+  cont.addEventListener('pointerdown', e => {
+    const c = e.target.closest('.chip'); if (!c || c.classList.contains('certo')) return;
+    arr = c; moveu = false; sx = e.clientX; sy = e.clientY; const r = c.getBoundingClientRect(); ox = e.clientX - r.left; oy = e.clientY - r.top;
+    c.setPointerCapture(e.pointerId);
+  });
+  cont.addEventListener('pointermove', e => {
+    if (!arr) return;
+    if (!moveu && Math.hypot(e.clientX - sx, e.clientY - sy) < 6) return;
+    if (!moveu) { moveu = true; fant = arr.cloneNode(true); fant.classList.add('fantasma'); fant.style.width = arr.getBoundingClientRect().width + 'px'; document.body.appendChild(fant); arr.style.opacity = '.35'; selec(null); }
+    fant.style.left = (e.clientX - ox) + 'px'; fant.style.top = (e.clientY - oy) + 'px';
+    const z = document.elementsFromPoint(e.clientX, e.clientY).find(el => el.classList && (el.classList.contains('zona') || el.classList.contains('banco')));
+    $$('.zona', cont).forEach(x => x.classList.toggle('sobre', x === z));
+  });
+  const fim = e => {
+    if (!arr) return; const c = arr; arr = null;
+    if (moveu) {
+      const z = document.elementsFromPoint(e.clientX, e.clientY).find(el => el.classList && (el.classList.contains('zona') || el.classList.contains('banco')) && cont.contains(el));
+      fant && fant.remove(); fant = null; c.style.opacity = ''; $$('.zona', cont).forEach(x => x.classList.remove('sobre'));
+      if (z) solta(c, z);
+    } else { selec(sel === c ? null : c); }
+  };
+  cont.addEventListener('pointerup', fim); cont.addEventListener('pointercancel', fim);
+  cont.addEventListener('click', e => { const z = e.target.closest('.zona'); if (z && sel && !e.target.closest('.chip')) { solta(sel, z); selec(null); } });
+  cont.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const c = e.target.closest('.chip'), z = e.target.closest('.zona');
+    if (c && !c.classList.contains('certo')) { e.preventDefault(); selec(sel === c ? null : c); }
+    else if (z && sel) { e.preventDefault(); solta(sel, z); selec(null); }
+  });
+  btn.addEventListener('click', () => {
+    let erros = 0;
+    $$('.zona .chip:not(.certo)', cont).forEach(c => { if (c.dataset.z === c.parentElement.dataset.z) c.classList.add('certo'); else { erros++; c.classList.add('errado'); setTimeout(() => { c.classList.remove('errado'); banco.appendChild(c); pronto(); }, 900); } });
+    msg.className = 'msg on ' + (erros ? 'nao' : 'ok');
+    msg.textContent = erros ? `${erros === 1 ? 'Um item ficou' : erros + ' itens ficaram'} no lugar errado e ${erros === 1 ? 'voltou' : 'voltaram'} para a lista. ${cfg.dicaErro}` : cfg.ok;
+    if (!erros) { btn.disabled = true; dica.textContent = ''; cfg.fim(); }
+  });
+  pronto();
+}
+
+arrastar($('#dndLigar'), {
+  zonas:[{id:'j', t:'Jornada exaustiva', ic:'relogio'}, {id:'c', t:'Condições degradantes', ic:'casa'}, {id:'s', t:'Servidão por dívida', ic:'cadeado'}, {id:'r', t:'Retenção de documentos (§1º)', ic:'doc'}],
+  itens:[
+    {t:'Turno das 5h até depois das 20h', z:'j'},
+    {t:'Colchões no chão do alojamento', z:'c'},
+    {t:'Um único banheiro para muitos trabalhadores', z:'c'},
+    {t:'Galões de água sem identificação', z:'c'},
+    {t:'"Ninguém sai daqui antes de acertar" a dívida da cantina', z:'s'},
+    {t:'Carteiras de trabalho guardadas pelo encarregado', z:'r'}
+  ],
+  dicaErro:'Releia as cartas acima e tente de novo.',
+  ok:'Isso mesmo. No caso de Marcos, havia sinais de três elementos do art. 149, além da retenção de documentos.',
+  fim:() => { conquista('ligar'); concluir('lei'); }
+});
+arrastar($('#dndFatos'), {
+  zonas:[{id:'f', t:'Entra no relato', ic:'doc'}, {id:'x', t:'Fica de fora', ic:'lixo'}],
+  itens:[
+    {t:'Na segunda-feira, vi colchões no chão do alojamento da terceirizada.', z:'f'},
+    {t:'Os galões de água do alojamento não tinham identificação.', z:'f'},
+    {t:'Um trabalhador relatou que o encarregado guarda as carteiras de trabalho.', z:'f'},
+    {t:'Nome completo do trabalhador que conversou comigo.', z:'x'},
+    {t:'Acho que a empresa inteira deve estar envolvida nisso.', z:'x'},
+    {t:'O encarregado é uma pessoa sem caráter.', z:'x'}
+  ],
+  dicaErro:'Lembre: fatos (o que, onde, quando) entram; suposições, julgamentos e dados que expõem quem falou ficam de fora.',
+  ok:'Relato pronto. Fatos objetivos entram; suposições e julgamentos ficam de fora, e quem falou com Marcos fica protegido.',
+  fim:() => { conquista('fatos'); concluir('fatos'); }
+});
+
+/* ---------------- ordenar ---------------- */
+const PASSOS_DD = [
+  ['Identificar','Mapear fornecedores e atividades com maior risco, como serviços com muita mão de obra, alojamento e locais remotos. Consultar o Cadastro de Empregadores do Ministério do Trabalho e Emprego antes de contratar.'],
+  ['Prevenir','Incluir cláusulas de direitos humanos nos contratos, orientar fornecedores e treinar quem fiscaliza contratos.'],
+  ['Monitorar','Fazer visitas e auditorias, inclusive nos alojamentos, e ouvir os trabalhadores de forma segura.'],
+  ['Responder e remediar','Manter um canal de denúncia que proteja quem relata, apurar, corrigir e garantir reparação às pessoas afetadas.']
+];
+const ol = $('#ordem');
+const seta = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="${d ? 'M6 9l6 6 6-6' : 'M6 15l6-6 6 6'}"/></svg>`;
+let ordemIni = [2, 0, 3, 1];
+ol.innerHTML = ordemIni.map(i => `<li data-i="${i}"><span class="n"></span><div class="tx"><b>${PASSOS_DD[i][0]}</b><span>${PASSOS_DD[i][1]}</span></div><div class="mv"><button data-m="-1" aria-label="Subir ${PASSOS_DD[i][0]}">${seta(0)}</button><button data-m="1" aria-label="Descer ${PASSOS_DD[i][0]}">${seta(1)}</button></div></li>`).join('');
+ol.addEventListener('click', e => {
+  const b = e.target.closest('[data-m]'); if (!b || ol.classList.contains('resolvida')) return;
+  const li = b.closest('li'); const m = +b.dataset.m;
+  if (m < 0 && li.previousElementSibling) ol.insertBefore(li, li.previousElementSibling);
+  if (m > 0 && li.nextElementSibling) ol.insertBefore(li.nextElementSibling, li);
+  limpaOrdem(); b.focus();
+});
+function limpaOrdem() { $$('li', ol).forEach(l => l.classList.remove('certo', 'errado')); $('#msgOrdem').className = 'msg'; }
+let arrLi = null;
+ol.addEventListener('pointerdown', e => { if (ol.classList.contains('resolvida') || e.target.closest('button')) return; const li = e.target.closest('li'); if (!li) return; arrLi = li; li.classList.add('arrastando'); li.setPointerCapture(e.pointerId); });
+ol.addEventListener('pointermove', e => {
+  if (!arrLi) return;
+  const outros = $$('li', ol).filter(l => l !== arrLi);
+  let antes = null; for (const l of outros) { const r = l.getBoundingClientRect(); if (e.clientY < r.top + r.height / 2) { antes = l; break; } }
+  if (antes) { if (arrLi.nextElementSibling !== antes) ol.insertBefore(arrLi, antes); } else if (ol.lastElementChild !== arrLi) ol.appendChild(arrLi);
+});
+const fimLi = () => { if (!arrLi) return; arrLi.classList.remove('arrastando'); arrLi = null; limpaOrdem(); };
+ol.addEventListener('pointerup', fimLi); ol.addEventListener('pointercancel', fimLi);
+$('#verOrdem').addEventListener('click', () => {
+  const lis = $$('li', ol); let ok = 0; lis.forEach((l, i) => { const c = +l.dataset.i === i; l.classList.toggle('certo', c); l.classList.toggle('errado', !c); if (c) ok++; });
+  const m = $('#msgOrdem');
+  if (ok === 4) { m.className = 'msg on ok'; m.textContent = 'Ordem certa. Veja o que cada passo significa na prática.'; ol.classList.add('resolvida'); $('#verOrdem').disabled = true; conquista('ordem'); concluir('ordem'); }
+  else { m.className = 'msg on nao'; m.textContent = `${ok} de 4 na posição certa. Pense: antes de prevenir, é preciso saber onde está o risco.`; }
+});
+
+/* ---------------- quiz ---------------- */
+const QUIZ = [
+  {tipo:'Múltipla escolha · marque todas as corretas', multi:true, e:'Quais situações são sinais de alerta de trabalho análogo à escravidão?',
+   a:['O encarregado guarda as carteiras de trabalho dos empregados.','Os trabalhadores devem para a cantina e só podem sair depois de quitar a dívida.','O turno começa às 5h e termina depois das 20h, todos os dias.','A terceirizada fornece uniforme e EPI sem custo para os trabalhadores.'], c:[0,1,2],
+   fb:'Retenção de documentos, dívida que impede a saída e jornada exaustiva são sinais de alerta. Fornecer EPI sem custo é uma obrigação cumprida.'},
+  {tipo:'Verdadeiro ou falso', e:'Para haver trabalho análogo à escravidão, a pessoa precisa estar presa ou acorrentada.',
+   a:['Verdadeiro','Falso'], c:[1], fb:'Falso. Basta um dos quatro elementos do art. 149: trabalho forçado, jornada exaustiva, condições degradantes ou servidão por dívida.'},
+  {tipo:'Escolha uma', e:'Os trabalhadores do caso são empregados da terceirizada. Qual é a responsabilidade da empresa contratante?',
+   a:['Nenhuma, porque não são seus empregados diretos.','Ela alcança a cadeia de fornecedores, por meio da devida diligência.','Só existe depois de uma ação da polícia.'], c:[1],
+   fb:'Pelos Princípios Orientadores da ONU, a responsabilidade de respeitar os direitos humanos inclui a cadeia de fornecedores.'},
+  {tipo:'Escolha uma', e:'Ao acionar o canal de denúncia, o que Marcos deve fazer?',
+   a:['Esperar ter certeza e reunir todas as provas antes.','Descrever o que viu e ouviu, onde e quando, protegendo quem falou com ele.','Contar o caso nos grupos da equipe para pressionar a terceirizada.'], c:[1],
+   fb:'Ninguém precisa ter certeza para relatar. Fatos objetivos e a proteção de quem falou permitem uma apuração segura.'}
+];
+const resp = QUIZ.map(() => new Set());
+function montaQuiz() {
+  $('#quiz').innerHTML = QUIZ.map((q, i) => `<div class="q" data-q="${i}"><div class="tipo">Questão ${i + 1} · ${q.tipo}</div><p class="enun">${q.e}</p><div class="alts">${q.a.map((t, j) => `<button class="alt ${q.multi ? '' : 'radio'}" data-a="${j}" aria-pressed="false"><span class="box"></span><span>${t}</span></button>`).join('')}</div><div class="fb"></div></div>`).join('');
+}
+montaQuiz();
+let enviado = false;
+$('#quiz').addEventListener('click', e => {
+  const b = e.target.closest('.alt'); if (!b || enviado) return;
+  const qi = +b.closest('.q').dataset.q, j = +b.dataset.a, q = QUIZ[qi], s = resp[qi];
+  if (q.multi) { s.has(j) ? s.delete(j) : s.add(j); } else { s.clear(); s.add(j); }
+  $$('.alt', b.closest('.q')).forEach(x => x.setAttribute('aria-pressed', s.has(+x.dataset.a)));
+  const falta = resp.filter(r => !r.size).length;
+  $('#enviarQuiz').disabled = falta > 0; $('#dicaQuiz').textContent = falta ? `Falta${falta > 1 ? 'm' : ''} ${falta} quest${falta > 1 ? 'ões' : 'ão'}.` : 'Tudo respondido.';
+});
+$('#enviarQuiz').addEventListener('click', () => {
+  enviado = true; let pts = 0;
+  QUIZ.forEach((q, i) => {
+    const s = resp[i], certo = q.c.length === s.size && q.c.every(c => s.has(c)); if (certo) pts++;
+    const box = $(`.q[data-q="${i}"]`);
+    $$('.alt', box).forEach(x => { const j = +x.dataset.a; if (q.c.includes(j)) x.classList.add('gab-ok'); else if (s.has(j)) x.classList.add('gab-nao'); });
+    const fb = $('.fb', box); fb.className = 'fb on ' + (certo ? 'ok' : 'nao'); fb.textContent = (certo ? 'Correto. ' : 'Não foi dessa vez. ') + q.fb;
+  });
+  $('#pz').textContent = pts + '/4';
+  $('#resTit').textContent = pts === 4 ? 'Excelente!' : pts >= 3 ? 'Muito bem!' : 'Vale revisar.';
+  $('#resTx').textContent = pts >= 3 ? 'Você reconhece os sinais, conhece a lei e sabe como agir.' : 'Revise o gabarito comentado e, se quiser, refaça o desafio.';
+  $('#resultado').classList.add('on'); $('#enviarQuiz').disabled = true; $('#dicaQuiz').textContent = '';
+  concluir('quiz'); conquista('fim');
+  setTimeout(() => $('#resultado').scrollIntoView({behavior:'smooth', block:'center'}), 200);
+});
+$('#refazerQuiz').addEventListener('click', () => { enviado = false; resp.forEach(r => r.clear()); montaQuiz(); $('#resultado').classList.remove('on'); $('#enviarQuiz').disabled = true; $('#dicaQuiz').textContent = 'Responda às 4 questões para enviar.'; $('#s-quiz').scrollIntoView({behavior:'smooth'}); });
+$('#recomecar').addEventListener('click', () => { try { localStorage.removeItem(CHAVE); } catch (e) {} location.href = location.pathname + location.search; });
+
+atualiza();
+})();
+</script>
+</body>
+</html>
